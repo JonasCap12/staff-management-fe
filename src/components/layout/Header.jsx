@@ -1,9 +1,16 @@
-import { Shield, Bell, User, Search, Settings } from 'lucide-react';
-import { useState } from 'react';
+import { Shield, Bell, User, Search, Settings } from "lucide-react";
+import { useState } from "react";
+import { useAuth } from "../../modules/auth/context/useAuth";
 
 const Header = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const { user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    setShowProfile(false);
+  };
 
   return (
     <header className="bg-white shadow-xl border-b-2 border-blue-100 relative z-50">
@@ -24,7 +31,9 @@ const Header = () => {
               <h1 className="text-2xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 HR Management
               </h1>
-              <p className="text-xs text-gray-500 font-medium tracking-wider uppercase">Enterprise System</p>
+              <p className="text-xs text-gray-500 font-medium tracking-wider uppercase">
+                Enterprise System
+              </p>
             </div>
           </div>
         </div>
@@ -50,32 +59,54 @@ const Header = () => {
             {showNotifications && (
               <div className="absolute right-0 mt-3 w-96 bg-white rounded-2xl shadow-2xl border border-gray-100 z-[999] animate-fadeIn">
                 <div className="p-5 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-purple-50 rounded-t-2xl">
-                  <h3 className="font-bold text-gray-900 text-lg">Thông báo mới</h3>
-                  <p className="text-sm text-gray-600">Bạn có 3 thông báo chưa đọc</p>
+                  <h3 className="font-bold text-gray-900 text-lg">
+                    Thông báo mới
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    Bạn có 3 thông báo chưa đọc
+                  </p>
                 </div>
                 <div className="p-4 space-y-4 max-h-80 overflow-y-auto">
                   <div className="flex items-start space-x-4 p-3 hover:bg-blue-50 rounded-xl transition-colors cursor-pointer">
                     <div className="h-3 w-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full mt-2 animate-bounce"></div>
                     <div className="flex-1">
-                      <p className="text-sm font-semibold text-gray-900">Yêu cầu nghỉ phép mới</p>
-                      <p className="text-xs text-gray-600 mt-1">Trần Văn A yêu cầu nghỉ phép 3 ngày từ 15/12 - 17/12</p>
-                      <p className="text-xs text-blue-600 mt-1 font-medium">5 phút trước</p>
+                      <p className="text-sm font-semibold text-gray-900">
+                        Yêu cầu nghỉ phép mới
+                      </p>
+                      <p className="text-xs text-gray-600 mt-1">
+                        Trần Văn A yêu cầu nghỉ phép 3 ngày từ 15/12 - 17/12
+                      </p>
+                      <p className="text-xs text-blue-600 mt-1 font-medium">
+                        5 phút trước
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-4 p-3 hover:bg-green-50 rounded-xl transition-colors cursor-pointer">
                     <div className="h-3 w-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full mt-2"></div>
                     <div className="flex-1">
-                      <p className="text-sm font-semibold text-gray-900">Nhân viên mới</p>
-                      <p className="text-xs text-gray-600 mt-1">Nguyễn Thị C đã được thêm vào phòng IT</p>
-                      <p className="text-xs text-green-600 mt-1 font-medium">1 giờ trước</p>
+                      <p className="text-sm font-semibold text-gray-900">
+                        Nhân viên mới
+                      </p>
+                      <p className="text-xs text-gray-600 mt-1">
+                        Nguyễn Thị C đã được thêm vào phòng IT
+                      </p>
+                      <p className="text-xs text-green-600 mt-1 font-medium">
+                        1 giờ trước
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-4 p-3 hover:bg-orange-50 rounded-xl transition-colors cursor-pointer">
                     <div className="h-3 w-3 bg-gradient-to-r from-orange-500 to-red-500 rounded-full mt-2"></div>
                     <div className="flex-1">
-                      <p className="text-sm font-semibold text-gray-900">Báo cáo tháng</p>
-                      <p className="text-xs text-gray-600 mt-1">Báo cáo nhân sự tháng 12 đã sẵn sàng</p>
-                      <p className="text-xs text-orange-600 mt-1 font-medium">2 giờ trước</p>
+                      <p className="text-sm font-semibold text-gray-900">
+                        Báo cáo tháng
+                      </p>
+                      <p className="text-xs text-gray-600 mt-1">
+                        Báo cáo nhân sự tháng 12 đã sẵn sàng
+                      </p>
+                      <p className="text-xs text-orange-600 mt-1 font-medium">
+                        2 giờ trước
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -101,8 +132,12 @@ const Header = () => {
                 <div className="absolute -bottom-1 -right-1 h-4 w-4 bg-green-500 border-2 border-white rounded-full"></div>
               </div>
               <div className="hidden md:block text-left">
-                <p className="text-sm font-bold text-gray-900">Admin User</p>
-                <p className="text-xs text-gray-600 font-medium">System Administrator</p>
+                <p className="text-sm font-bold text-gray-900">
+                  {user?.name || "User"}
+                </p>
+                <p className="text-xs text-gray-600 font-medium">
+                  {user?.permissions?.name || "Employee"}
+                </p>
               </div>
             </button>
 
@@ -114,8 +149,25 @@ const Header = () => {
                       <User className="h-6 w-6 text-white" />
                     </div>
                     <div>
-                      <p className="font-bold text-gray-900">Admin User</p>
-                      <p className="text-xs text-gray-600">admin@company.com</p>
+                      <p className="font-bold text-gray-900">{user?.name}</p>
+                      <p className="text-xs text-gray-600">
+                        {user?.username}@company.com
+                      </p>
+                      <span
+                        className={`inline-block px-2 py-1 mt-1 rounded-full text-xs font-medium ${
+                          user?.role === "admin"
+                            ? "bg-red-100 text-red-800"
+                            : user?.role === "hr"
+                            ? "bg-blue-100 text-blue-800"
+                            : user?.role === "lead"
+                            ? "bg-green-100 text-green-800"
+                            : user?.role === "accounting"
+                            ? "bg-yellow-100 text-yellow-800"
+                            : "bg-gray-100 text-gray-800"
+                        }`}
+                      >
+                        {user?.permissions?.name}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -130,7 +182,10 @@ const Header = () => {
                     Hỗ trợ & Trợ giúp
                   </button>
                   <hr className="border-gray-200" />
-                  <button className="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors font-medium">
+                  <button
+                    onClick={handleLogout}
+                    className="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors font-medium"
+                  >
                     Đăng xuất
                   </button>
                 </div>
