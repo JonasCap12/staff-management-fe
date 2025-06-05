@@ -1,6 +1,21 @@
-import { useState } from 'react';
-import { Plus, Search, Filter, Download, Eye, Edit, Trash2, Users, TrendingUp, Clock, Star } from 'lucide-react';
-import ExportButton from '../../../components/common/ExportButton';
+import { useState } from "react";
+import {
+  Plus,
+  Search,
+  Filter,
+  Download,
+  Eye,
+  Edit,
+  Trash2,
+  Users,
+  TrendingUp,
+  Clock,
+  Star,
+} from "lucide-react";
+import ExportButton from "../../../components/common/ExportButton";
+
+// Import component AddEmployee (bạn cần tạo file riêng cho component này)
+import AddEmployee from "./AddEmployee"; // Đường dẫn tùy theo cấu trúc project của bạn
 
 const EmployeeList = () => {
   const [employees, setEmployees] = useState([
@@ -50,10 +65,13 @@ const EmployeeList = () => {
     },
   ]);
 
-  const [searchTerm, setSearchTerm] = useState('');
-  const [departmentFilter, setDepartmentFilter] = useState('');
-  const [statusFilter, setStatusFilter] = useState('');
-  const [viewMode, setViewMode] = useState('grid');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [departmentFilter, setDepartmentFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [viewMode, setViewMode] = useState("table");
+
+  // THÊM STATE MỚI ĐỂ ĐIỀU KHIỂN HIỂN THỊ FORM THÊM NHÂN VIÊN
+  const [showAddForm, setShowAddForm] = useState(false);
 
   const filteredEmployees = employees.filter(
     (emp) =>
@@ -166,7 +184,11 @@ const EmployeeList = () => {
               }))}
               fileName="danh_sach_nhan_vien.xlsx"
             />
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-blue-700">
+            {/* SỬA NÚT THÊM NHÂN VIÊN */}
+            <button
+              onClick={() => setShowAddForm(true)}
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-blue-700"
+            >
               <Plus className="h-4 w-4" />
               <span>Thêm nhân viên</span>
             </button>
