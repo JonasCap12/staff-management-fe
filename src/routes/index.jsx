@@ -6,6 +6,7 @@ import LoginPage from "../layouts/AuthLayout";
 import Dashboard from "../modules/dashboard/pages/Dashboard";
 import EmployeeList from "../modules/employee/pages/EmployeeList";
 import ModulePlaceholder from "../components/common/ModulePlaceholder";
+import AttendanceSystem from "../modules/attendance/pages/AttendanceSystem";
 import {
   Clock,
   Calendar,
@@ -54,7 +55,7 @@ function AppRoutesInner() {
         <Route path="employees" element={<EmployeeList />} />
         <Route
           path="attendance"
-          element={<ModulePlaceholder title="Quản lý Chấm công" icon={Clock} />}
+          element={<AttendanceSystem title="Quản lý Chấm công" icon={Clock} />}
         />
         <Route
           path="leave"
