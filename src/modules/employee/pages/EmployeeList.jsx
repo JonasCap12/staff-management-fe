@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Plus, Search, Filter, Download, Eye, Edit, Trash2, Users, TrendingUp, Clock, Star } from 'lucide-react';
 import ExportButton from '../../../components/common/ExportButton';
+import AddEmployeeModal from '../components/AddEmployeeModal'; // Thêm dòng này
 
 const EmployeeList = () => {
   const [employees] = useState([
@@ -13,7 +14,8 @@ const EmployeeList = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [departmentFilter, setDepartmentFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
-  const [viewMode, setViewMode] = useState('grid');
+  const [viewMode, setViewMode] = useState('table');
+  const [showAddModal, setShowAddModal] = useState(false); // Thêm state
 
   const filteredEmployees = employees.filter(emp =>
     emp.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
@@ -75,7 +77,10 @@ const EmployeeList = () => {
               }))}
               fileName="danh_sach_nhan_vien.xlsx"
             />
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-blue-700">
+            <button
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-blue-700"
+              onClick={() => setShowAddModal(true)} // Thêm onClick
+            >
               <Plus className="h-4 w-4" />
               <span>Thêm nhân viên</span>
             </button>

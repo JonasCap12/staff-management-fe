@@ -42,10 +42,10 @@ const Header = () => {
               className="relative p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-colors"
             >
               <Bell className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 h-5 w-5 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full flex items-center justify-center font-bold animate-bounce z-[9999]">
+            </button>
+            <span className="absolute -top-1 -right-1 h-5 w-5 bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs rounded-full flex items-center justify-center font-bold animate-bounce z-[9999]">
                 3
               </span>
-            </button>
 
             {showNotifications && (
               <div className="absolute right-0 mt-3 w-96 bg-white rounded-2xl shadow-2xl border border-gray-100 z-[999] animate-fadeIn">
