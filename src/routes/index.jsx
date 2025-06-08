@@ -7,6 +7,7 @@ import Dashboard from "../modules/dashboard/pages/Dashboard";
 import EmployeeList from "../modules/employee/pages/EmployeeList";
 import ModulePlaceholder from "../components/common/ModulePlaceholder";
 import AttendanceSystem from "../modules/attendance/pages/AttendanceSystem";
+import LeaveManagement from "../modules/leave/pages/LeaveForm";
 import {
   Clock,
   Calendar,
@@ -60,7 +61,7 @@ function AppRoutesInner() {
         <Route
           path="leave"
           element={
-            <ModulePlaceholder title="Quản lý Nghỉ phép" icon={Calendar} />
+            <LeaveManagement title="Quản lý Nghỉ phép" icon={Calendar} />
           }
         />
         <Route

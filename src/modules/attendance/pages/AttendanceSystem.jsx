@@ -242,7 +242,7 @@ const AttendanceSystem = () => {
                 <button
                   onClick={handleCheckIn}
                   disabled={!checkInCode.trim()}
-                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-black py-4 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-105"
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-105"
                 >
                   <Clock className="inline h-5 w-5 mr-2" />
                   Chấm công
@@ -435,7 +435,7 @@ const AttendanceSystem = () => {
                     </code>
                     <button
                       onClick={generateNewQRCode}
-                      className="bg-gradient-to-r from-blue-600 to-purple-600 text-black px-6 py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105"
+                      className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105"
                     >
                       <RefreshCw className="inline h-4 w-4 mr-2" />
                       Tạo mã mới

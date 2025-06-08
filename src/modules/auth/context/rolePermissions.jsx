@@ -1,4 +1,4 @@
-// rolePermissions.js - Constants and utility functions
+// rolePermissions.js - Fixed version
 export const rolePermissions = {
   admin: {
     name: "Administrator",
@@ -21,7 +21,7 @@ export const rolePermissions = {
     permissions: [
       "employees",
       "attendance",
-      "leave",
+      "leave.admin", // Thay đổi từ "leave" thành "leave.admin"
       "recruitment",
       "performance",
       "documents",
@@ -53,7 +53,7 @@ export const rolePermissions = {
     permissions: [
       "dashboard",
       "attendance",
-      "leave",
+      "leave.own", // Thay đổi từ "leave" thành "leave.own"
       "payroll",
       "reports.financial",
     ],
