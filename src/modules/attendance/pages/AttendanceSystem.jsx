@@ -13,6 +13,8 @@ import {
   Filter,
 } from "lucide-react";
 import { useAuth } from "../../auth/context/useAuth";
+import ExportButton from "../../../components/common/ExportButton";
+
 
 const AttendanceSystem = () => {
   const { user } = useAuth();
@@ -304,10 +306,26 @@ const AttendanceSystem = () => {
                   </select>
                 </div>
 
-                <button className="mt-7 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-                  <Download className="inline h-4 w-4 mr-2" />
-                  Xuất file Excel
-                </button>
+                {/* Nút Export Excel */}
+                <div className="mt-7">
+                  <ExportButton
+                    data={filteredRecords.map((record) => ({
+                      "Mã NV": record.employeeId,
+                      "Tên nhân viên": record.employeeName,
+                      "Ngày": record.date,
+                      "Giờ vào": record.checkIn || "-",
+                      "Giờ ra": record.checkOut || "-",
+                      "Số giờ": record.workHours,
+                      "Trạng thái":
+                        record.status === "present"
+                          ? "Có mặt"
+                          : record.status === "late"
+                          ? "Đi muộn"
+                          : "Vắng mặt",
+                    }))}
+                    fileName={`bang_cham_cong_${selectedDate}.xlsx`}
+                  />
+                </div>
               </div>
             </div>
 

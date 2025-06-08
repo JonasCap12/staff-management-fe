@@ -171,6 +171,7 @@ const EmployeeList = () => {
             </p>
           </div>
           <div className="flex gap-3">
+            {/* NÚT XUẤT FILE EXCEL */}
             <ExportButton
               data={filteredEmployees.map((emp) => ({
                 "Họ tên": emp.name,
@@ -184,7 +185,7 @@ const EmployeeList = () => {
               }))}
               fileName="danh_sach_nhan_vien.xlsx"
             />
-            {/* SỬA NÚT THÊM NHÂN VIÊN */}
+            {/* NÚT THÊM NHÂN VIÊN */}
             <button
               onClick={() => setShowAddForm(true)}
               className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 hover:bg-blue-700"
