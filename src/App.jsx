@@ -10,5 +10,3 @@ function App() {
 }
 
 export default App;
-
-// E:\Full_Stack\FE\staff-management-fe\src\App.jsx
