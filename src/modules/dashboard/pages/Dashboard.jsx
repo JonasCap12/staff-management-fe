@@ -1,65 +1,20 @@
+import EmployeeStats from '../../../components/layout/EmployeeStats';
 import { Users, Activity, Calendar, DollarSign, UserPlus, FileText } from 'lucide-react';
-import { useState } from 'react';
 
 const Dashboard = () => {
-  const [stats] = useState({
-    totalEmployees: 156,
-    activeEmployees: 142,
-    onLeave: 8,
-    newHires: 6,
-    totalSalary: 2840000000,
-    pendingRequests: 12
-  });
+  // Fake employees data for stats demo
+  const employees = [
+    { status: 'active', rating: 4.8 },
+    { status: 'active', rating: 4.6 },
+    { status: 'leave', rating: 4.9 },
+    { status: 'active', rating: 4.7 },
+    // ...add more if needed
+  ];
 
   return (
     <div className="space-y-6">
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center">
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <Users className="h-6 w-6 text-blue-600" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Tổng nhân viên</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.totalEmployees}</p>
-            </div>
-          </div>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center">
-            <div className="p-2 bg-green-100 rounded-lg">
-              <Activity className="h-6 w-6 text-green-600" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Đang làm việc</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.activeEmployees}</p>
-            </div>
-          </div>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center">
-            <div className="p-2 bg-orange-100 rounded-lg">
-              <Calendar className="h-6 w-6 text-orange-600" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Đang nghỉ phép</p>
-              <p className="text-2xl font-bold text-gray-900">{stats.onLeave}</p>
-            </div>
-          </div>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-          <div className="flex items-center">
-            <div className="p-2 bg-purple-100 rounded-lg">
-              <DollarSign className="h-6 w-6 text-purple-600" />
-            </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-600">Tổng chi phí lương</p>
-              <p className="text-2xl font-bold text-gray-900">{(stats.totalSalary / 1000000).toFixed(0)}M</p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <EmployeeStats employees={employees} />
       {/* Quick Actions */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
