@@ -21,7 +21,7 @@ export const rolePermissions = {
     permissions: [
       "employees",
       "attendance",
-      "leave.admin", // Thay đổi từ "leave" thành "leave.admin"
+      "leave", // Thay đổi từ "leave" thành "leave.admin"
       "recruitment",
       "performance",
       "documents",

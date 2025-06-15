@@ -303,8 +303,6 @@ const LeaveManagement = () => {
     );
   };
 
-  // Trong hàm getFilteredRequests(), thay đổi logic như sau:
-
   const getFilteredRequests = () => {
     // Chỉ Admin và HR mới có thể xem tất cả đơn
     if (hasPermission("*") || hasPermission("leave.admin")) {
@@ -320,22 +318,6 @@ const LeaveManagement = () => {
     }
   };
 
-  // Trong Tab Navigation, cập nhật text hiển thị:
-  <button
-    onClick={() => setActiveTab("my-requests")}
-    className={`py-2 px-1 border-b-2 font-medium text-sm ${
-      activeTab === "my-requests"
-        ? "border-blue-500 text-blue-600"
-        : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-    }`}
-  >
-    {hasPermission("*") || hasPermission("leave.admin")
-      ? "Tất Cả Đơn"
-      : hasPermission("leave.approve")
-      ? "Đơn Team"
-      : "Đơn Của Tôi"}
-  </button>;
-
   const canApprove =
     hasPermission("*") ||
     hasPermission("leave.admin") ||
@@ -347,200 +329,6 @@ const LeaveManagement = () => {
 
   return (
     <div className="p-6 max-w-7xl mx-auto">
-      <style jsx>{`
-        .modal-overlay {
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: rgba(0, 0, 0, 0.1);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 1000;
-          backdrop-filter: blur(2px);
-        }
-
-        .modal-content {
-          background: linear-gradient(135deg, #f8faff 0%, #ffffff 100%);
-          border-radius: 20px;
-          width: 90%;
-          max-width: 500px;
-          max-height: 90vh;
-          overflow-y: auto;
-          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          animation: modalSlideIn 0.3s ease-out;
-        }
-
-        @keyframes modalSlideIn {
-          from {
-            opacity: 0;
-            transform: translateY(-20px) scale(0.95);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-
-        .modal-header {
-          padding: 24px 24px 16px;
-          border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        .modal-title {
-          font-size: 1.5rem;
-          font-weight: 700;
-          color: #1a202c;
-          margin: 0;
-        }
-
-        .modal-close {
-          background: none;
-          border: none;
-          cursor: pointer;
-          padding: 8px;
-          border-radius: 50%;
-          transition: background-color 0.2s;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .modal-close:hover {
-          background-color: rgba(0, 0, 0, 0.05);
-        }
-
-        .modal-body {
-          padding: 20px 24px 24px;
-        }
-
-        .form-group {
-          margin-bottom: 20px;
-        }
-
-        .form-label {
-          display: block;
-          font-weight: 600;
-          color: #374151;
-          margin-bottom: 6px;
-          font-size: 0.9rem;
-        }
-
-        .form-input,
-        .form-select,
-        .form-textarea {
-          width: 100%;
-          padding: 12px 16px;
-          border: 2px solid #e5e7eb;
-          border-radius: 12px;
-          font-size: 1rem;
-          transition: all 0.2s;
-          background: white;
-          box-sizing: border-box;
-        }
-
-        .form-input:focus,
-        .form-select:focus,
-        .form-textarea:focus {
-          outline: none;
-          border-color: #3b82f6;
-          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .form-textarea {
-          resize: vertical;
-          min-height: 80px;
-        }
-
-        .modal-actions {
-          display: flex;
-          gap: 12px;
-          margin-top: 24px;
-        }
-
-        .btn {
-          padding: 12px 24px;
-          border-radius: 12px;
-          font-weight: 600;
-          font-size: 1rem;
-          cursor: pointer;
-          transition: all 0.2s;
-          border: none;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          flex: 1;
-          justify-content: center;
-        }
-
-        .btn-primary {
-          background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-          color: white;
-        }
-
-        .btn-primary:hover {
-          background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
-          transform: translateY(-1px);
-        }
-
-        .btn-secondary {
-          background: #f3f4f6;
-          color: #6b7280;
-          border: 1px solid #d1d5db;
-        }
-
-        .btn-secondary:hover {
-          background: #e5e7eb;
-          color: #374151;
-        }
-
-        .days-info {
-          padding: 12px;
-          border-radius: 8px;
-          margin-bottom: 16px;
-        }
-
-        .days-info.error {
-          background: #fef2f2;
-          border: 1px solid #fca5a5;
-        }
-
-        .days-info.normal {
-          background: #f9fafb;
-          border: 1px solid #e5e7eb;
-        }
-
-        .validation-warning {
-          color: #f59e0b;
-          font-size: 0.875rem;
-          margin-top: 4px;
-        }
-
-        .validation-error {
-          color: #ef4444;
-          font-size: 0.875rem;
-          font-weight: 600;
-        }
-
-        .validation-success {
-          color: #10b981;
-          font-size: 0.875rem;
-          font-weight: 600;
-        }
-
-        .helper-text {
-          color: #6b7280;
-          font-size: 0.75rem;
-          margin-top: 4px;
-        }
-      `}</style>
-
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
           Quản Lý Nghỉ Phép
@@ -561,8 +349,10 @@ const LeaveManagement = () => {
                 : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
             }`}
           >
-            {hasPermission("*") || hasPermission("leave")
+            {hasPermission("*") || hasPermission("leave.admin")
               ? "Tất Cả Đơn"
+              : hasPermission("leave.approve")
+              ? "Đơn Team"
               : "Đơn Của Tôi"}
           </button>
           {canApprove && (
@@ -603,23 +393,33 @@ const LeaveManagement = () => {
       {/* New Request Form Modal */}
       {showRequestForm && (
         <div
-          className="modal-overlay"
+          className="fixed inset-0 bg-opacity-25 backdrop-blur-sm flex items-center justify-center z-50 animate-in fade-in duration-300"
           onClick={() => setShowRequestForm(false)}
         >
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <div className="modal-header">
-              <h3 className="modal-title">Tạo Đơn Nghỉ Phép</h3>
+          <div
+            className="bg-gradient-to-br from-slate-50 to-white rounded-3xl w-[90%] max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl border border-white/20 animate-in slide-in-from-bottom-4 zoom-in-95 duration-300"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="px-6 py-6 border-b border-black/5 flex justify-between items-center">
+              <h3 className="text-2xl font-bold text-gray-900">
+                Tạo Đơn Nghỉ Phép
+              </h3>
               <button
                 onClick={() => setShowRequestForm(false)}
-                className="modal-close"
+                className="p-2 hover:bg-black/5 rounded-full transition-colors"
               >
                 <X size={20} />
               </button>
             </div>
 
-            <div className="modal-body">
-              <div className="form-group">
-                <label className="form-label">Loại nghỉ phép *</label>
+            {/* Modal Body */}
+            <div className="px-6 py-5 space-y-5">
+              {/* Leave Type */}
+              <div>
+                <label className="block font-semibold text-gray-700 mb-2 text-sm">
+                  Loại nghỉ phép *
+                </label>
                 <select
                   value={newRequest.leaveType}
                   onChange={(e) =>
@@ -629,7 +429,7 @@ const LeaveManagement = () => {
                       reason: "",
                     })
                   }
-                  className="form-select"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-base transition-all focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 bg-white"
                   required
                 >
                   <option value="">Chọn loại nghỉ phép</option>
@@ -641,8 +441,11 @@ const LeaveManagement = () => {
                 </select>
               </div>
 
-              <div className="form-group">
-                <label className="form-label">Ngày bắt đầu *</label>
+              {/* Start Date */}
+              <div>
+                <label className="block font-semibold text-gray-700 mb-2 text-sm">
+                  Ngày bắt đầu *
+                </label>
                 <input
                   type="date"
                   value={newRequest.startDate}
@@ -654,19 +457,22 @@ const LeaveManagement = () => {
                       ? ""
                       : new Date().toISOString().split("T")[0]
                   }
-                  className="form-input"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-base transition-all focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 bg-white"
                   required
                 />
                 {newRequest.leaveType &&
                   !["sick", "emergency"].includes(newRequest.leaveType) && (
-                    <p className="helper-text">
+                    <p className="text-gray-500 text-xs mt-1">
                       Không được chọn ngày trong quá khứ
                     </p>
                   )}
               </div>
 
-              <div className="form-group">
-                <label className="form-label">Ngày kết thúc *</label>
+              {/* End Date */}
+              <div>
+                <label className="block font-semibold text-gray-700 mb-2 text-sm">
+                  Ngày kết thúc *
+                </label>
                 <input
                   type="date"
                   value={newRequest.endDate}
@@ -677,31 +483,34 @@ const LeaveManagement = () => {
                     newRequest.startDate ||
                     new Date().toISOString().split("T")[0]
                   }
-                  className="form-input"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-base transition-all focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 bg-white"
                   required
                 />
-                <p className="helper-text">Phải sau hoặc bằng ngày bắt đầu</p>
+                <p className="text-gray-500 text-xs mt-1">
+                  Phải sau hoặc bằng ngày bắt đầu
+                </p>
               </div>
 
+              {/* Days Calculation */}
               {newRequest.startDate && newRequest.endDate && (
                 <div
-                  className={`days-info ${
+                  className={`p-3 rounded-lg border ${
                     calculateDays(newRequest.startDate, newRequest.endDate) ===
                     -1
-                      ? "error"
-                      : "normal"
+                      ? "bg-red-50 border-red-200"
+                      : "bg-gray-50 border-gray-200"
                   }`}
                 >
                   {calculateDays(newRequest.startDate, newRequest.endDate) ===
                   -1 ? (
-                    <p className="validation-error">
+                    <p className="text-red-600 text-sm font-semibold">
                       ⚠️ Lỗi: Ngày kết thúc phải sau hoặc bằng ngày bắt đầu
                     </p>
                   ) : (
                     <>
-                      <p className="validation-success">
+                      <p className="text-green-600 text-sm font-semibold">
                         Số ngày nghỉ:{" "}
-                        <span className="font-semibold">
+                        <span className="font-bold">
                           {calculateDays(
                             newRequest.startDate,
                             newRequest.endDate
@@ -716,7 +525,7 @@ const LeaveManagement = () => {
                         );
                         if (!validation.isValid && validation.message) {
                           return (
-                            <p className="validation-warning">
+                            <p className="text-amber-600 text-sm mt-1">
                               ⚠️ {validation.message}
                             </p>
                           );
@@ -728,15 +537,18 @@ const LeaveManagement = () => {
                 </div>
               )}
 
+              {/* Reason Selection */}
               {newRequest.leaveType && newRequest.leaveType !== "other" && (
-                <div className="form-group">
-                  <label className="form-label">Lý do *</label>
+                <div>
+                  <label className="block font-semibold text-gray-700 mb-2 text-sm">
+                    Lý do *
+                  </label>
                   <select
                     value={newRequest.reason}
                     onChange={(e) =>
                       setNewRequest({ ...newRequest, reason: e.target.value })
                     }
-                    className="form-select"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-base transition-all focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 bg-white"
                     required
                   >
                     <option value="">Chọn lý do</option>
@@ -751,10 +563,13 @@ const LeaveManagement = () => {
                 </div>
               )}
 
+              {/* Custom Reason */}
               {(newRequest.leaveType === "other" ||
                 newRequest.reason === "Khác") && (
-                <div className="form-group">
-                  <label className="form-label">Lý do cụ thể *</label>
+                <div>
+                  <label className="block font-semibold text-gray-700 mb-2 text-sm">
+                    Lý do cụ thể *
+                  </label>
                   <textarea
                     value={newRequest.customReason}
                     onChange={(e) =>
@@ -763,7 +578,7 @@ const LeaveManagement = () => {
                         customReason: e.target.value,
                       })
                     }
-                    className="form-textarea"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-base transition-all focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 bg-white resize-none min-h-[80px]"
                     rows="3"
                     placeholder="Vui lòng mô tả lý do cụ thể..."
                     required
@@ -771,18 +586,19 @@ const LeaveManagement = () => {
                 </div>
               )}
 
-              <div className="modal-actions">
+              {/* Modal Actions */}
+              <div className="flex gap-3 pt-4">
                 <button
                   type="button"
                   onClick={() => setShowRequestForm(false)}
-                  className="btn btn-secondary"
+                  className="flex-1 px-6 py-3 border border-gray-300 bg-gray-50 text-gray-700 rounded-xl font-semibold text-base hover:bg-gray-100 hover:text-gray-900 transition-all duration-200"
                 >
                   Hủy
                 </button>
                 <button
                   type="button"
                   onClick={handleSubmitRequest}
-                  className="btn btn-primary"
+                  className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl font-semibold text-base hover:from-blue-700 hover:to-blue-800 hover:-translate-y-0.5 hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2"
                 >
                   <Plus size={16} />
                   Gửi Đơn
