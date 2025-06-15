@@ -13,6 +13,8 @@ import {
   Star,
 } from "lucide-react";
 import ExportButton from "../../../components/common/ExportButton";
+import EmployeeStats from "../../../components/layout/EmployeeStats";
+import FilterBar from "../../../components/common/FilterBar";
 
 // Import component AddEmployee (bạn cần tạo file riêng cho component này)
 import AddEmployee from "./AddEmployee"; // Đường dẫn tùy theo cấu trúc project của bạn
@@ -79,37 +81,6 @@ const EmployeeList = () => {
       (departmentFilter ? emp.department === departmentFilter : true) &&
       (statusFilter ? emp.status === statusFilter : true)
   );
-
-  const stats = [
-    {
-      label: "Tổng nhân viên",
-      value: employees.length,
-      icon: Users,
-      color: "blue",
-      change: "+12%",
-    },
-    {
-      label: "Đang hoạt động",
-      value: employees.filter((e) => e.status === "active").length,
-      icon: TrendingUp,
-      color: "green",
-      change: "+8%",
-    },
-    {
-      label: "Nghỉ phép",
-      value: employees.filter((e) => e.status === "leave").length,
-      icon: Clock,
-      color: "yellow",
-      change: "-2%",
-    },
-    {
-      label: "Đánh giá TB",
-      value: "4.7",
-      icon: Star,
-      color: "purple",
-      change: "+0.2",
-    },
-  ];
 
   const getInitials = (name) => {
     return name
@@ -197,98 +168,51 @@ const EmployeeList = () => {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {stats.map((stat, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-200"
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-600 text-sm font-medium">
-                    {stat.label}
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900 mt-1">
-                    {stat.value}
-                  </p>
-                  <p
-                    className={`text-sm mt-2 ${
-                      stat.change.startsWith("+")
-                        ? "text-green-600"
-                        : "text-red-500"
-                    }`}
-                  >
-                    {stat.change} từ tháng trước
-                  </p>
-                </div>
-                <div className={`p-3 rounded-xl bg-${stat.color}-100`}>
-                  <stat.icon className={`h-6 w-6 text-${stat.color}-600`} />
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        <EmployeeStats employees={employees} />
 
         {/* Search and Filters */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-          <div className="flex flex-col lg:flex-row gap-4">
-            <div className="relative flex-1">
-              <input
-                type="text"
-                placeholder="Tìm kiếm nhân viên..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-              />
-            </div>
+        <FilterBar
+          filters={[
+            {
+              type: "text",
+              key: "search",
+              label: "Tìm kiếm nhân viên...",
+              value: searchTerm,
+              onChange: setSearchTerm,
+            },
 
-            <div className="flex gap-3">
-              <select
-                value={departmentFilter}
-                onChange={(e) => setDepartmentFilter(e.target.value)}
-                className="border border-gray-200 px-4 py-3 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white min-w-[150px]"
-              >
-                <option value="">Tất cả phòng ban</option>
-                <option value="IT">IT</option>
-                <option value="HR">HR</option>
-                <option value="Marketing">Marketing</option>
-              </select>
-
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="border border-gray-200 px-4 py-3 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white min-w-[150px]"
-              >
-                <option value="">Tất cả trạng thái</option>
-                <option value="active">Hoạt động</option>
-                <option value="leave">Nghỉ phép</option>
-              </select>
-
-              <div className="flex bg-gray-100 rounded-xl p-1">
-                <button
-                  onClick={() => setViewMode("grid")}
-                  className={`px-3 py-2 rounded-lg text-sm transition-all duration-200 ${
-                    viewMode === "grid"
-                      ? "bg-white shadow-sm text-gray-900"
-                      : "text-gray-600 hover:text-gray-900"
-                  }`}
-                >
-                  Card
-                </button>
-                <button
-                  onClick={() => setViewMode("table")}
-                  className={`px-3 py-2 rounded-lg text-sm transition-all duration-200 ${
-                    viewMode === "table"
-                      ? "bg-white shadow-sm text-gray-900"
-                      : "text-gray-600 hover:text-gray-900"
-                  }`}
-                >
-                  Table
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+            {
+              type: "custom",
+              key: "viewMode",
+              render: () => (
+                <div className="inline-flex">
+                  <button
+                    onClick={() => setViewMode("grid")}
+                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-200
+                      ${viewMode === "grid"
+                        ? "bg-blue-600 text-white shadow-lg scale-105"
+                        : "bg-white text-blue-600 border border-blue-600 hover:bg-blue-50 hover:scale-105"
+                      }
+                    `}
+                  >
+                    <span>Card</span>
+                  </button>
+                  <button
+                    onClick={() => setViewMode("table")}
+                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-200 ml-2
+                      ${viewMode === "table"
+                        ? "bg-blue-600 text-white shadow-lg scale-105"
+                        : "bg-white text-blue-600 border border-blue-600 hover:bg-blue-50 hover:scale-105"
+                      }
+                    `}
+                  >
+                    <span>Table</span>
+                  </button>
+                </div>
+              ),
+            }
+          ]}
+        />
 
         {/* Employee List */}
         {viewMode === "grid" ? (

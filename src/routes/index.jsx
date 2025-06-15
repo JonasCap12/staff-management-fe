@@ -8,6 +8,7 @@ import EmployeeList from "../modules/employee/pages/EmployeeList";
 import ModulePlaceholder from "../components/common/ModulePlaceholder";
 import AttendanceSystem from "../modules/attendance/pages/AttendanceSystem";
 import LeaveManagement from "../modules/leave/pages/LeaveForm";
+import SalaryManagement from "../modules/salary/pages/SalaryManagement";
 import {
   Clock,
   Calendar,
@@ -19,7 +20,6 @@ import {
   Settings,
 } from "lucide-react";
 
-// Component con để sử dụng useAuth hook
 function AppRoutesInner() {
   const { user, isAuthenticated, login } = useAuth();
 
@@ -30,23 +30,20 @@ function AppRoutesInner() {
         path="/login"
         element={
           isAuthenticated ? (
-            // Nếu đã login thì chuyển về dashboard
             <Navigate to="/" replace />
           ) : (
-            // Nếu chưa login thì hiện trang Login, truyền hàm login
             <LoginPage onLogin={login} />
           )
         }
       />
 
-      {/* Các route chính phải login mới vào được */}
+      {/* Protected routes */}
       <Route
         path="/"
         element={
           isAuthenticated ? (
             <MainLayout user={user} />
           ) : (
-            // Nếu chưa login thì chuyển về login
             <Navigate to="/login" replace />
           )
         }
@@ -60,15 +57,11 @@ function AppRoutesInner() {
         />
         <Route
           path="leave"
-          element={
-            <LeaveManagement title="Quản lý Nghỉ phép" icon={Calendar} />
-          }
+          element={<LeaveManagement title="Quản lý Nghỉ phép" icon={Calendar} />}
         />
         <Route
           path="payroll"
-          element={
-            <ModulePlaceholder title="Lương & Phụ cấp" icon={DollarSign} />
-          }
+          element={<SalaryManagement title="Lương & Phụ cấp" icon={DollarSign} />}
         />
         <Route
           path="recruitment"
@@ -76,31 +69,23 @@ function AppRoutesInner() {
         />
         <Route
           path="performance"
-          element={
-            <ModulePlaceholder title="Đánh giá Hiệu suất" icon={TrendingUp} />
-          }
+          element={<ModulePlaceholder title="Đánh giá Hiệu suất" icon={TrendingUp} />}
         />
         <Route
           path="documents"
-          element={
-            <ModulePlaceholder title="Tài liệu Nhân sự" icon={FileText} />
-          }
+          element={<ModulePlaceholder title="Tài liệu Nhân sự" icon={FileText} />}
         />
         <Route
           path="reports"
-          element={
-            <ModulePlaceholder title="Báo cáo & Thống kê" icon={PieChart} />
-          }
+          element={<ModulePlaceholder title="Báo cáo & Thống kê" icon={PieChart} />}
         />
         <Route
           path="settings"
-          element={
-            <ModulePlaceholder title="Cài đặt Hệ thống" icon={Settings} />
-          }
+          element={<ModulePlaceholder title="Cài đặt Hệ thống" icon={Settings} />}
         />
       </Route>
 
-      {/* Nếu truy cập URL không hợp lệ */}
+      {/* Fallback route */}
       <Route
         path="*"
         element={<Navigate to={isAuthenticated ? "/" : "/login"} replace />}
@@ -109,7 +94,6 @@ function AppRoutesInner() {
   );
 }
 
-// Component chính với AuthProvider wrapper
 export default function AppRoutes() {
   return (
     <AuthProvider>
