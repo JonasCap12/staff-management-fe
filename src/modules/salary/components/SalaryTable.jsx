@@ -2,7 +2,25 @@ import { Eye, Edit2, Trash2 } from 'lucide-react';
 import { formatCurrency } from '../../../utils/formatCurrency';
 import { calculateNetSalary } from '../../../utils/salaryCalc';
 
-export default function SalaryTable({ employees, onView, onEdit, onDelete }) {
+export default function SalaryTable({ data = [], onView, onEdit, onDelete, loading = false }) {
+  const employees = Array.isArray(data) ? data : [];
+
+  if (loading) {
+    return (
+      <div className="min-h-[300px] flex items-center justify-center text-gray-500">
+        Đang tải dữ liệu...
+      </div>
+    );
+  }
+
+  if (!employees.length) {
+    return (
+      <div className="min-h-[300px] flex items-center justify-center text-gray-400">
+        Không có dữ liệu lương.
+      </div>
+    );
+  }
+
   return (
     <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
       <div className="overflow-x-auto">
@@ -20,9 +38,9 @@ export default function SalaryTable({ employees, onView, onEdit, onDelete }) {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {employees.map(employee => {
-              const totalAllowances = Object.values(employee.allowances).reduce((sum, val) => sum + val, 0);
-              const totalDeductions = Object.values(employee.deductions).reduce((sum, val) => sum + val, 0);
-              const netSalary = calculateNetSalary(employee);
+              const totalAllowances = Object.values(employee.allowances || {}).reduce((sum, val) => sum + (Number(val) || 0), 0);
+              const totalDeductions = Object.values(employee.deductions || {}).reduce((sum, val) => sum + (Number(val) || 0), 0);
+              const netSalary = calculateNetSalary(employee)?.netSalary || 0;
               return (
                 <tr key={employee.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
