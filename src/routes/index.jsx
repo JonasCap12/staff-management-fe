@@ -7,7 +7,7 @@ import Dashboard from "../modules/dashboard/pages/Dashboard";
 import EmployeeList from "../modules/employee/pages/EmployeeList";
 import ModulePlaceholder from "../components/common/ModulePlaceholder";
 import AttendanceSystem from "../modules/attendance/pages/AttendanceSystem";
-import LeaveManagement from "../modules/leave/pages/LeaveForm";
+import LeaveManagement from "../modules/leave/pages/LeaveManagement";
 import SalaryManagement from "../modules/salary/pages/SalaryManagement";
 import {
   Clock,
@@ -57,11 +57,15 @@ function AppRoutesInner() {
         />
         <Route
           path="leave"
-          element={<LeaveManagement title="Quản lý Nghỉ phép" icon={Calendar} />}
+          element={
+            <LeaveManagement title="Quản lý Nghỉ phép" icon={Calendar} />
+          }
         />
         <Route
           path="payroll"
-          element={<SalaryManagement title="Lương & Phụ cấp" icon={DollarSign} />}
+          element={
+            <SalaryManagement title="Lương & Phụ cấp" icon={DollarSign} />
+          }
         />
         <Route
           path="recruitment"
@@ -69,19 +73,27 @@ function AppRoutesInner() {
         />
         <Route
           path="performance"
-          element={<ModulePlaceholder title="Đánh giá Hiệu suất" icon={TrendingUp} />}
+          element={
+            <ModulePlaceholder title="Đánh giá Hiệu suất" icon={TrendingUp} />
+          }
         />
         <Route
           path="documents"
-          element={<ModulePlaceholder title="Tài liệu Nhân sự" icon={FileText} />}
+          element={
+            <ModulePlaceholder title="Tài liệu Nhân sự" icon={FileText} />
+          }
         />
         <Route
           path="reports"
-          element={<ModulePlaceholder title="Báo cáo & Thống kê" icon={PieChart} />}
+          element={
+            <ModulePlaceholder title="Báo cáo & Thống kê" icon={PieChart} />
+          }
         />
         <Route
           path="settings"
-          element={<ModulePlaceholder title="Cài đặt Hệ thống" icon={Settings} />}
+          element={
+            <ModulePlaceholder title="Cài đặt Hệ thống" icon={Settings} />
+          }
         />
       </Route>
 
