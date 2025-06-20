@@ -9,16 +9,17 @@ export default function SalaryFilters({
   selectedDepartment, setSelectedDepartment,
   selectedStatus, setSelectedStatus,
   selectedMonth, setSelectedMonth,
-  departments = [], // fix: default empty array
-  employees = [] // fix: default empty array
+  departments = [],
+  employees = []
 }) {
+  const safeEmployees = Array.isArray(employees) ? employees : [];
   // Chuẩn hóa data xuất file excel đúng thứ tự cột
-  const exportData = employees.map(emp => ({
+  const exportData = safeEmployees.map(emp => ({
     'Nhân Viên': `${emp.name} (${emp.code})`,
     'Lương Cơ Bản': emp.baseSalary,
     'Phụ Cấp': Object.values(emp.allowances || {}).reduce((a, b) => a + b, 0),
     'Khấu Trừ': Object.values(emp.deductions || {}).reduce((a, b) => a + b, 0),
-    'Lương Net': calculateNetSalary(emp),
+    'Lương Net': calculateNetSalary(emp)?.netSalary || 0,
     'Trạng Thái': emp.status
   }));
 
