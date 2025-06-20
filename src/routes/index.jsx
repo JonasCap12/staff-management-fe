@@ -9,6 +9,7 @@ import ModulePlaceholder from "../components/common/ModulePlaceholder";
 import AttendanceSystem from "../modules/attendance/pages/AttendanceSystem";
 import LeaveManagement from "../modules/leave/pages/LeaveManagement";
 import SalaryManagement from "../modules/salary/pages/SalaryManagement";
+import RecruitmentPage from "../modules/recruitment/pages/RecruitmentPage";
 import {
   Clock,
   Calendar,
@@ -69,7 +70,7 @@ function AppRoutesInner() {
         />
         <Route
           path="recruitment"
-          element={<ModulePlaceholder title="Tuyển dụng" icon={UserPlus} />}
+          element={<RecruitmentPage title="Tuyển dụng" icon={UserPlus} />}
         />
         <Route
           path="performance"

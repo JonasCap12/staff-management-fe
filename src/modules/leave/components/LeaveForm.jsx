@@ -65,10 +65,7 @@ const LeaveForm = ({ onSubmit, onClose, leaveTypes, commonReasons }) => {
   };
 
   return (
-    <div
-      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
-      onClick={onClose}
-    >
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div
         className="bg-gradient-to-br from-slate-50 to-white rounded-3xl w-[90%] max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl border border-white/20 animate-in slide-in-from-bottom-4 zoom-in-95 duration-300"
         onClick={(e) => e.stopPropagation()}
