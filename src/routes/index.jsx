@@ -4,12 +4,12 @@ import { useAuth } from "../modules/auth/context/useAuth";
 import MainLayout from "../layouts/MainLayout";
 import LoginPage from "../layouts/AuthLayout";
 import Dashboard from "../modules/dashboard/pages/Dashboard";
-import EmployeeList from "../modules/employee/pages/EmployeeList";
+import EmployeeManagement from "../modules/employee/pages/EmployeeManagement";
 import ModulePlaceholder from "../components/common/ModulePlaceholder";
 import AttendanceSystem from "../modules/attendance/pages/AttendanceSystem";
 import LeaveManagement from "../modules/leave/pages/LeaveManagement";
 import SalaryManagement from "../modules/salary/pages/SalaryManagement";
-import RecruitmentPage from "../modules/recruitment/pages/RecruitmentPage";
+import ReportManagement from "../modules/report/pages/ReportManagement";
 import {
   Clock,
   Calendar,
@@ -51,7 +51,7 @@ function AppRoutesInner() {
       >
         <Route index element={<Navigate to="/dashboard" />} />
         <Route path="dashboard" element={<Dashboard />} />
-        <Route path="employees" element={<EmployeeList />} />
+        <Route path="employees" element={<EmployeeManagement />} />
         <Route
           path="attendance"
           element={<AttendanceSystem title="Quản lý Chấm công" icon={Clock} />}
@@ -86,9 +86,7 @@ function AppRoutesInner() {
         />
         <Route
           path="reports"
-          element={
-            <ModulePlaceholder title="Báo cáo & Thống kê" icon={PieChart} />
-          }
+          element={<ReportManagement title="Báo cáo & Thống kê" icon={PieChart} />}
         />
         <Route
           path="settings"
