@@ -14,13 +14,6 @@ export default function SalaryManagement() {
   const [modalMode, setModalMode] = useState('add');
   const [selectedEmployee, setSelectedEmployee] = useState(null);
 
-  // Xử lý thêm mới nhân viên lương
-  const handleAdd = () => {
-    setModalMode('add');
-    setSelectedEmployee(null);
-    setShowModal(true);
-  };
-
   // Xử lý sửa nhân viên lương
   const handleEdit = (employee) => {
     setModalMode('edit');
@@ -58,12 +51,6 @@ export default function SalaryManagement() {
             <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">Quản lý Lương nhân viên</h1>
             <p className="text-gray-600 mt-2">Theo dõi, thống kê và quản lý bảng lương nhân viên</p>
           </div>
-          <button
-            onClick={handleAdd}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-semibold shadow flex items-center gap-2 transition"
-          >
-            + Thêm lương nhân viên
-          </button>
         </div>
         {/* Employee Stats */}
         <EmployeeStats employees={employees} />
