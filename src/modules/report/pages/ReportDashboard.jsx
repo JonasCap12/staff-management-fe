@@ -1,6 +1,6 @@
 import React from 'react';
 import { BarChart3, TrendingUp, Calendar, Users, DollarSign, Clock, RefreshCw, Download } from 'lucide-react';
-import useReportData from '../hooks/useReportData';
+import useReportData from '../../../hooks/useReportData';
 
 // Import components
 import OverviewStats from '../components/OverviewStats';
