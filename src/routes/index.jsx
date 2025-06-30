@@ -70,7 +70,7 @@ function AppRoutesInner() {
         />
         <Route
           path="recruitment"
-          element={<RecruitmentPage title="Tuyển dụng" icon={UserPlus} />}
+          element={<ModulePlaceholder title="Tuyển dụng" icon={UserPlus} />}
         />
         <Route
           path="performance"
