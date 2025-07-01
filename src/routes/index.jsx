@@ -10,6 +10,7 @@ import AttendanceSystem from "../modules/attendance/pages/AttendanceSystem";
 import LeaveManagement from "../modules/leave/pages/LeaveManagement";
 import SalaryManagement from "../modules/salary/pages/SalaryManagement";
 import ReportManagement from "../modules/report/pages/ReportManagement";
+import RecruitmentPage from "../modules/recruitment/pages/RecruitmentPage";
 import {
   Clock,
   Calendar,
@@ -70,7 +71,7 @@ function AppRoutesInner() {
         />
         <Route
           path="recruitment"
-          element={<ModulePlaceholder title="Tuyển dụng" icon={UserPlus} />}
+          element={<RecruitmentPage title="Tuyển dụng" icon={UserPlus} />}
         />
         <Route
           path="performance"
@@ -86,7 +87,9 @@ function AppRoutesInner() {
         />
         <Route
           path="reports"
-          element={<ReportManagement title="Báo cáo & Thống kê" icon={PieChart} />}
+          element={
+            <ReportManagement title="Báo cáo & Thống kê" icon={PieChart} />
+          }
         />
         <Route
           path="settings"
