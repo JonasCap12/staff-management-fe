@@ -12,6 +12,7 @@ import SalaryManagement from "../modules/salary/pages/SalaryManagement";
 import ReportManagement from "../modules/report/pages/ReportManagement";
 import RecruitmentPage from "../modules/recruitment/pages/RecruitmentPage";
 import PerformanceEvaluationPage from "../modules/performance/pages/PerformanceEvaluationPage";
+import DocumentManager from "../modules/document/pages/DocumentManager";
 import {
   Clock,
   Calendar,
@@ -85,9 +86,7 @@ function AppRoutesInner() {
         />
         <Route
           path="documents"
-          element={
-            <ModulePlaceholder title="Tài liệu Nhân sự" icon={FileText} />
-          }
+          element={<DocumentManager title="Tài liệu Nhân sự" icon={FileText} />}
         />
         <Route
           path="reports"
