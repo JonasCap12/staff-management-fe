@@ -11,6 +11,7 @@ import LeaveManagement from "../modules/leave/pages/LeaveManagement";
 import SalaryManagement from "../modules/salary/pages/SalaryManagement";
 import ReportManagement from "../modules/report/pages/ReportManagement";
 import RecruitmentPage from "../modules/recruitment/pages/RecruitmentPage";
+import PerformanceEvaluationPage from "../modules/performance/pages/PerformanceEvaluationPage";
 import {
   Clock,
   Calendar,
@@ -76,7 +77,10 @@ function AppRoutesInner() {
         <Route
           path="performance"
           element={
-            <ModulePlaceholder title="Đánh giá Hiệu suất" icon={TrendingUp} />
+            <PerformanceEvaluationPage
+              title="Đánh giá Hiệu suất"
+              icon={TrendingUp}
+            />
           }
         />
         <Route
