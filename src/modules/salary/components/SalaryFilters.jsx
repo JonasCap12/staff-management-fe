@@ -69,7 +69,6 @@ export default function SalaryFilters({
           ),
         },
       ]}
-      // Có thể truyền thêm children nếu muốn thêm nút xuất file, v.v.
       children={
         <ExportButton
           icon={<Download className="w-4 h-4 mr-1" />}
@@ -77,6 +76,24 @@ export default function SalaryFilters({
           fileName={`bang_luong_${selectedMonth || ''}.xlsx`}
         />
       }
+      activeFilters={[
+        searchTerm && { key: 'search', label: `Tìm kiếm: "${searchTerm}"` },
+        selectedDepartment && { key: 'department', label: `Phòng ban: ${selectedDepartment}` },
+        selectedStatus && { key: 'status', label: `Trạng thái: ${selectedStatus}` },
+        selectedMonth && { key: 'month', label: `Tháng: ${selectedMonth}` },
+      ].filter(Boolean)}
+      onRemoveFilter={key => {
+        if (key === 'search') setSearchTerm('');
+        if (key === 'department') setSelectedDepartment('');
+        if (key === 'status') setSelectedStatus('');
+        if (key === 'month') setSelectedMonth('');
+      }}
+      onResetFilters={() => {
+        setSearchTerm('');
+        setSelectedDepartment('');
+        setSelectedStatus('');
+        setSelectedMonth('');
+      }}
     />
   );
 }
