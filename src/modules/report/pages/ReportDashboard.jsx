@@ -1,17 +1,27 @@
-import React from 'react';
-import { BarChart3, TrendingUp, Calendar, Users, DollarSign, Clock, RefreshCw, Download } from 'lucide-react';
-import useReportData from '../../../hooks/useReportData';
+import React from "react";
+import {
+  BarChart3,
+  TrendingUp,
+  Calendar,
+  Users,
+  DollarSign,
+  Clock,
+  RefreshCw,
+  Download,
+  PieChart,
+} from "lucide-react";
+import useReportData from "../../../hooks/useReportData";
 
 // Import components
-import OverviewStats from '../components/OverviewStats';
-import ReportFilters from '../components/ReportFilters';
-import DepartmentChart from '../components/DepartmentChart';
-import DepartmentPieChart from '../components/DepartmentPieChart';
-import SalaryLineChart from '../components/SalaryLineChart';
-import LeaveStatCard from '../components/LeaveStatCard';
-import TopPerformerTable from '../components/TopPerformerTable';
-import TurnoverChart from '../components/TurnoverChart';
-import EventSummaryTable from '../components/EventSummaryTable';
+import OverviewStats from "../components/OverviewStats";
+import ReportFilters from "../components/ReportFilters";
+import DepartmentChart from "../components/DepartmentChart";
+import DepartmentPieChart from "../components/DepartmentPieChart";
+import SalaryLineChart from "../components/SalaryLineChart";
+import LeaveStatCard from "../components/LeaveStatCard";
+import TopPerformerTable from "../components/TopPerformerTable";
+import TurnoverChart from "../components/TurnoverChart";
+import EventSummaryTable from "../components/EventSummaryTable";
 
 const ReportDashboard = () => {
   const {
@@ -24,23 +34,23 @@ const ReportDashboard = () => {
     leaveStat,
     turnoverChartData,
     events,
-    
+
     // Filters
     selectedMonth,
     selectedDepartment,
     departments,
     months,
-    
+
     // State
     loading,
     error,
-    
+
     // Handlers
     handleMonthChange,
     handleDepartmentChange,
     resetFilters,
     exportReportData,
-    refreshData
+    refreshData,
   } = useReportData();
 
   if (error) {
@@ -72,8 +82,9 @@ const ReportDashboard = () => {
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
-              <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">
-                📊 Báo cáo & Thống kê Nhân sự
+              <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent flex items-center gap-2">
+                <PieChart className="w-7 h-7 text-blue-600" />
+                Báo cáo & Thống kê Nhân sự
               </h1>
               <p className="text-gray-600 mt-1 text-sm md:text-base">
                 Tổng quan nhân sự, lương, hiệu suất, nghỉ phép
@@ -82,14 +93,16 @@ const ReportDashboard = () => {
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2 text-sm text-gray-500">
                 <Calendar className="w-4 h-4" />
-                <span>Cập nhật: {new Date().toLocaleString('vi-VN')}</span>
+                <span>Cập nhật: {new Date().toLocaleString("vi-VN")}</span>
               </div>
               <button
                 onClick={refreshData}
                 disabled={loading}
                 className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors disabled:opacity-50"
               >
-                <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+                <RefreshCw
+                  className={`w-4 h-4 ${loading ? "animate-spin" : ""}`}
+                />
                 Làm mới
               </button>
               <button
@@ -103,7 +116,6 @@ const ReportDashboard = () => {
           </div>
         </div>
       </div>
-
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="space-y-8">
@@ -133,46 +145,28 @@ const ReportDashboard = () => {
           {/* Charts Grid */}
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
             {/* Department Chart */}
-            <DepartmentChart 
-              data={departmentChartData}
-              loading={loading}
-            />
+            <DepartmentChart data={departmentChartData} loading={loading} />
 
             {/* Department Pie Chart */}
-            <DepartmentPieChart 
-              data={departmentPieData}
-              loading={loading}
-            />
+            <DepartmentPieChart data={departmentPieData} loading={loading} />
           </div>
 
           {/* Second Row Charts */}
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
             {/* Salary Chart */}
-            <SalaryLineChart 
-              data={salaryChartData}
-              loading={loading}
-            />
+            <SalaryLineChart data={salaryChartData} loading={loading} />
 
             {/* Turnover Chart */}
-            <TurnoverChart 
-              data={turnoverChartData}
-              loading={loading}
-            />
+            <TurnoverChart data={turnoverChartData} loading={loading} />
           </div>
 
           {/* Third Row Charts */}
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
             {/* Leave Stats */}
-            <LeaveStatCard 
-              leaveStat={leaveStat}
-              loading={loading}
-            />
+            <LeaveStatCard leaveStat={leaveStat} loading={loading} />
 
             {/* Event Summary */}
-            <EventSummaryTable 
-              events={events}
-              loading={loading}
-            />
+            <EventSummaryTable events={events} loading={loading} />
           </div>
 
           {/* Top Performers */}
@@ -181,10 +175,7 @@ const ReportDashboard = () => {
               <Users className="w-5 h-5 text-green-600" />
               Top 5 Nhân viên hiệu suất cao nhất
             </h2>
-            <TopPerformerTable 
-              performers={topPerformers}
-              loading={loading}
-            />
+            <TopPerformerTable performers={topPerformers} loading={loading} />
           </div>
         </div>
       </div>
@@ -195,7 +186,9 @@ const ReportDashboard = () => {
           <div className="bg-white rounded-xl p-8 text-center shadow-2xl">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
             <p className="text-gray-600 font-medium">Đang tải dữ liệu...</p>
-            <p className="text-sm text-gray-500 mt-2">Vui lòng chờ trong giây lát</p>
+            <p className="text-sm text-gray-500 mt-2">
+              Vui lòng chờ trong giây lát
+            </p>
           </div>
         </div>
       )}
@@ -203,4 +196,4 @@ const ReportDashboard = () => {
   );
 };
 
-export default ReportDashboard; 
+export default ReportDashboard;
