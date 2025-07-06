@@ -13,6 +13,7 @@ import ReportManagement from "../modules/report/pages/ReportManagement";
 import RecruitmentPage from "../modules/recruitment/pages/RecruitmentPage";
 import PerformanceEvaluationPage from "../modules/performance/pages/PerformanceEvaluationPage";
 import DocumentManager from "../modules/document/pages/DocumentManager";
+import SettingsPage from "../modules/setting/pages/SettingsPage";
 import {
   Clock,
   Calendar,
@@ -96,9 +97,7 @@ function AppRoutesInner() {
         />
         <Route
           path="settings"
-          element={
-            <ModulePlaceholder title="Cài đặt Hệ thống" icon={Settings} />
-          }
+          element={<SettingsPage />}
         />
       </Route>
 
