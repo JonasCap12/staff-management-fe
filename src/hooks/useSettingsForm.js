@@ -5,7 +5,7 @@ import {
   emailSettingsApi, 
   dataManagementApi,
   mockSettingsData 
-} from '../services/settingsApi';
+} from '../modules/setting/services/settingsApi';
 
 // Validation functions
 const validateCompanyInfo = (data) => {

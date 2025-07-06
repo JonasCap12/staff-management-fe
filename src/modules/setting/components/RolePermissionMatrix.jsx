@@ -16,7 +16,7 @@ import {
   ROLE_OPTIONS, 
   PERMISSION_MODULES, 
   DEFAULT_ROLE_PERMISSIONS 
-} from '../constants/settingOptions';
+} from '../../../constants/settingOptions';
 import { rolePermissionApi } from '../services/settingsApi';
 
 const RolePermissionMatrix = () => {

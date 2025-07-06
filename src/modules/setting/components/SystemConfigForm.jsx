@@ -14,8 +14,8 @@ import {
   LANGUAGE_OPTIONS, 
   TIMEZONE_OPTIONS, 
   WEEK_START_OPTIONS 
-} from '../constants/settingOptions';
-import { useSystemConfigForm } from '../hooks/useSettingsForm';
+} from '../../../constants/settingOptions';
+import { useSystemConfigForm } from '../../../hooks/useSettingsForm';
 
 const SystemConfigForm = () => {
   const {

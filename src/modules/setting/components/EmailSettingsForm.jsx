@@ -12,8 +12,8 @@ import {
   Bell,
   BellOff
 } from 'lucide-react';
-import { EMAIL_NOTIFICATION_TYPES } from '../constants/settingOptions';
-import { useEmailSettingsForm } from '../hooks/useSettingsForm';
+import { EMAIL_NOTIFICATION_TYPES } from '../../../constants/settingOptions';
+import { useEmailSettingsForm } from '../../../hooks/useSettingsForm';
 
 const EmailSettingsForm = () => {
   const {
