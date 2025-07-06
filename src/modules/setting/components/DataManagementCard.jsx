@@ -14,8 +14,8 @@ import {
   CheckCircle2,
   Info
 } from 'lucide-react';
-import { DATA_EXPORT_OPTIONS } from '../constants/settingOptions';
-import { useDataManagement } from '../hooks/useSettingsForm';
+import { DATA_EXPORT_OPTIONS } from '../../../constants/settingOptions';
+import { useDataManagement } from '../../../hooks/useSettingsForm';
 
 const DataManagementCard = () => {
   const {
