@@ -11,7 +11,7 @@ import {
   AlertCircle,
   CheckCircle2
 } from 'lucide-react';
-  import { useCompanyInfoForm } from '../../../hooks/useSettingsForm';
+import { useCompanyInfoForm } from '../../../hooks/useSettingsForm';
 
 const CompanyInfoForm = () => {
   const {
