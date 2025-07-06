@@ -57,15 +57,15 @@ const EmailSettingsForm = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
         <div>
           <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
             <Mail className="w-5 h-5 text-blue-600" />
             Cài đặt email hệ thống
           </h2>
-          <p className="text-sm text-gray-600 mt-1">
+          <p className="text-sm text-gray-600 mt-2">
             Cấu hình SMTP và thông báo email tự động
           </p>
         </div>
@@ -117,38 +117,38 @@ const EmailSettingsForm = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* SMTP Configuration */}
-        <div className="space-y-6">
-          <div className="bg-white p-6 rounded-lg border border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900 mb-4 flex items-center gap-2">
+        <div className="space-y-8">
+          <div className="bg-white p-8 rounded-lg border border-gray-200 shadow-sm">
+            <h3 className="text-lg font-medium text-gray-900 mb-6 flex items-center gap-2">
               <Server className="w-5 h-5 text-blue-600" />
               Cấu hình SMTP
             </h3>
             
-            <div className="space-y-4">
+            <div className="space-y-6">
               {/* SMTP Host */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-3">
                   SMTP Host *
                 </label>
                 <input
                   type="text"
                   value={formData.smtpHost || ''}
                   onChange={(e) => handleInputChange('smtpHost', e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                     errors.smtpHost ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="smtp.gmail.com"
                 />
                 {errors.smtpHost && (
-                  <p className="mt-1 text-sm text-red-600">{errors.smtpHost}</p>
+                  <p className="mt-2 text-sm text-red-600">{errors.smtpHost}</p>
                 )}
               </div>
 
               {/* SMTP Port */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-3">
                   SMTP Port *
                 </label>
                 <input
@@ -157,50 +157,50 @@ const EmailSettingsForm = () => {
                   max="65535"
                   value={formData.smtpPort || ''}
                   onChange={(e) => handleInputChange('smtpPort', parseInt(e.target.value))}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                     errors.smtpPort ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="587"
                 />
                 {errors.smtpPort && (
-                  <p className="mt-1 text-sm text-red-600">{errors.smtpPort}</p>
+                  <p className="mt-2 text-sm text-red-600">{errors.smtpPort}</p>
                 )}
               </div>
 
               {/* SMTP Username */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-3">
                   SMTP Username *
                 </label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <User className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <input
                     type="text"
                     value={formData.smtpUsername || ''}
                     onChange={(e) => handleInputChange('smtpUsername', e.target.value)}
-                    className={`w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                    className={`w-full pl-12 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                       errors.smtpUsername ? 'border-red-500' : 'border-gray-300'
                     }`}
                     placeholder="your-email@gmail.com"
                   />
                 </div>
                 {errors.smtpUsername && (
-                  <p className="mt-1 text-sm text-red-600">{errors.smtpUsername}</p>
+                  <p className="mt-2 text-sm text-red-600">{errors.smtpUsername}</p>
                 )}
               </div>
 
               {/* SMTP Password */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-3">
                   SMTP Password
                 </label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <Lock className="absolute left-4 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                   <input
                     type="password"
                     value={formData.smtpPassword || ''}
                     onChange={(e) => handleInputChange('smtpPassword', e.target.value)}
-                    className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="••••••••"
                   />
                 </div>
@@ -234,63 +234,63 @@ const EmailSettingsForm = () => {
         </div>
 
         {/* Email Settings */}
-        <div className="space-y-6">
+        <div className="space-y-8">
           {/* From Settings */}
-          <div className="bg-white p-6 rounded-lg border border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900 mb-4 flex items-center gap-2">
+          <div className="bg-white p-8 rounded-lg border border-gray-200 shadow-sm">
+            <h3 className="text-lg font-medium text-gray-900 mb-6 flex items-center gap-2">
               <Send className="w-5 h-5 text-blue-600" />
               Thông tin người gửi
             </h3>
             
-            <div className="space-y-4">
+            <div className="space-y-6">
               {/* From Email */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-3">
                   Email gửi mặc định *
                 </label>
                 <input
                   type="email"
                   value={formData.fromEmail || ''}
                   onChange={(e) => handleInputChange('fromEmail', e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                     errors.fromEmail ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="noreply@company.com"
                 />
                 {errors.fromEmail && (
-                  <p className="mt-1 text-sm text-red-600">{errors.fromEmail}</p>
+                  <p className="mt-2 text-sm text-red-600">{errors.fromEmail}</p>
                 )}
               </div>
 
               {/* From Name */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-3">
                   Tên người gửi *
                 </label>
                 <input
                   type="text"
                   value={formData.fromName || ''}
                   onChange={(e) => handleInputChange('fromName', e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                     errors.fromName ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="ABC Company"
                 />
                 {errors.fromName && (
-                  <p className="mt-1 text-sm text-red-600">{errors.fromName}</p>
+                  <p className="mt-2 text-sm text-red-600">{errors.fromName}</p>
                 )}
               </div>
 
               {/* Reply To */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 mb-3">
                   Email trả lời
                 </label>
                 <input
                   type="email"
                   value={formData.replyTo || ''}
                   onChange={(e) => handleInputChange('replyTo', e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   placeholder="support@company.com"
                 />
                 <p className="mt-1 text-xs text-gray-500">
@@ -301,8 +301,8 @@ const EmailSettingsForm = () => {
           </div>
 
           {/* Notification Settings */}
-          <div className="bg-white p-6 rounded-lg border border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900 mb-4 flex items-center gap-2">
+          <div className="bg-white p-8 rounded-lg border border-gray-200 shadow-sm">
+            <h3 className="text-lg font-medium text-gray-900 mb-6 flex items-center gap-2">
               <Bell className="w-5 h-5 text-blue-600" />
               Cài đặt thông báo
             </h3>

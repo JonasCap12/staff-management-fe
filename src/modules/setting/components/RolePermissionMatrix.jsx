@@ -10,7 +10,9 @@ import {
   Check,
   AlertTriangle,
   Eye,
-  EyeOff
+  EyeOff,
+  AlertCircle,
+  CheckCircle2
 } from 'lucide-react';
 import { 
   ROLE_OPTIONS, 
@@ -205,24 +207,39 @@ const RolePermissionMatrix = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
         <div>
           <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
             <Shield className="w-5 h-5 text-blue-600" />
             Quản lý vai trò và phân quyền
           </h2>
-          <p className="text-sm text-gray-600 mt-1">
-            Cấu hình vai trò và quyền truy cập cho từng chức năng
+          <p className="text-sm text-gray-600 mt-2">
+            Tạo và quản lý vai trò, phân quyền cho người dùng
           </p>
         </div>
         
+        {/* Save indicator */}
         <div className="flex items-center gap-3">
           {hasChanges && (
             <div className="flex items-center gap-2 text-amber-600 text-sm">
-              <AlertTriangle className="w-4 h-4" />
+              <AlertCircle className="w-4 h-4" />
               <span>Có thay đổi chưa lưu</span>
+            </div>
+          )}
+          
+          {saving && (
+            <div className="flex items-center gap-2 text-blue-600 text-sm">
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+              <span>Đang lưu...</span>
+            </div>
+          )}
+          
+          {!hasChanges && !saving && (
+            <div className="flex items-center gap-2 text-green-600 text-sm">
+              <CheckCircle2 className="w-4 h-4" />
+              <span>Đã lưu</span>
             </div>
           )}
           
@@ -231,95 +248,41 @@ const RolePermissionMatrix = () => {
             disabled={saving || !hasChanges}
             className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
-            {saving ? (
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-            ) : (
-              <Save className="w-4 h-4" />
-            )}
+            <Save className="w-4 h-4" />
             Lưu quyền
           </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Roles Panel */}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        {/* Roles List */}
         <div className="lg:col-span-1">
-          <div className="bg-white p-6 rounded-lg border border-gray-200">
-            <div className="flex items-center justify-between mb-4">
+          <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+            <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-medium text-gray-900">Vai trò</h3>
               <button
                 onClick={() => setShowNewRoleForm(true)}
-                className="flex items-center gap-1 px-2 py-1 text-sm bg-blue-100 text-blue-700 rounded hover:bg-blue-200 transition-colors"
+                className="flex items-center gap-1 px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition-colors"
               >
-                <Plus className="w-3 h-3" />
+                <Plus className="w-4 h-4" />
                 Thêm
               </button>
             </div>
-
-            {/* New Role Form */}
-            {showNewRoleForm && (
-              <div className="mb-4 p-4 bg-gray-50 rounded-lg border">
-                <h4 className="text-sm font-medium text-gray-900 mb-3">Thêm vai trò mới</h4>
-                <div className="space-y-3">
-                  <input
-                    type="text"
-                    placeholder="Tên vai trò (viết liền)"
-                    value={newRole.name}
-                    onChange={(e) => setNewRole(prev => ({ ...prev, name: e.target.value }))}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Tên hiển thị"
-                    value={newRole.label}
-                    onChange={(e) => setNewRole(prev => ({ ...prev, label: e.target.value }))}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  />
-                  <select
-                    value={newRole.color}
-                    onChange={(e) => setNewRole(prev => ({ ...prev, color: e.target.value }))}
-                    className="w-full px-3 py-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  >
-                    <option value="red">Đỏ</option>
-                    <option value="blue">Xanh dương</option>
-                    <option value="green">Xanh lá</option>
-                    <option value="gray">Xám</option>
-                    <option value="yellow">Vàng</option>
-                  </select>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={handleCreateRole}
-                      className="flex-1 px-3 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
-                    >
-                      Tạo
-                    </button>
-                    <button
-                      onClick={() => setShowNewRoleForm(false)}
-                      className="flex-1 px-3 py-1 text-sm bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
-                    >
-                      Hủy
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Roles List */}
-            <div className="space-y-2">
+            
+            <div className="space-y-3">
               {roles.map((role) => (
                 <div
                   key={role.value}
-                  className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-colors ${
+                  className={`flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors ${
                     selectedRole === role.value
-                      ? 'bg-blue-50 border border-blue-200'
-                      : 'bg-gray-50 hover:bg-gray-100'
+                      ? 'border-blue-500 bg-blue-50'
+                      : 'border-gray-200 hover:border-gray-300'
                   }`}
                   onClick={() => setSelectedRole(role.value)}
                 >
                   <div className="flex items-center gap-3">
-                    <span className={`px-2 py-1 text-xs font-medium rounded-full ${getRoleColor(role.color)}`}>
-                      {role.label}
-                    </span>
+                    <div className={`w-3 h-3 rounded-full ${getRoleColor(role.color).split(' ')[0]}`}></div>
+                    <span className="text-sm font-medium text-gray-900">{role.label}</span>
                   </div>
                   
                   {role.value !== 'admin' && (
@@ -328,7 +291,7 @@ const RolePermissionMatrix = () => {
                         e.stopPropagation();
                         handleDeleteRole(role.value);
                       }}
-                      className="p-1 text-gray-400 hover:text-red-600 transition-colors"
+                      className="p-1 text-red-500 hover:text-red-700 transition-colors"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -341,90 +304,66 @@ const RolePermissionMatrix = () => {
 
         {/* Permissions Matrix */}
         <div className="lg:col-span-3">
-          <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-            <div className="p-6 border-b border-gray-200">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-medium text-gray-900">
-                  Phân quyền: {roles.find(r => r.value === selectedRole)?.label}
-                </h3>
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => handleSelectAllRole(true)}
-                    className="text-sm text-blue-600 hover:text-blue-700"
-                  >
-                    Chọn tất cả
-                  </button>
-                  <span className="text-gray-300">|</span>
-                  <button
-                    onClick={() => handleSelectAllRole(false)}
-                    className="text-sm text-blue-600 hover:text-blue-700"
-                  >
-                    Bỏ chọn tất cả
-                  </button>
-                </div>
+          <div className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-medium text-gray-900">
+                Phân quyền: {roles.find(r => r.value === selectedRole)?.label}
+              </h3>
+              
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => handleSelectAllRole(true)}
+                  className="px-3 py-1 text-sm bg-green-100 text-green-700 rounded hover:bg-green-200 transition-colors"
+                >
+                  Chọn tất cả
+                </button>
+                <button
+                  onClick={() => handleSelectAllRole(false)}
+                  className="px-3 py-1 text-sm bg-red-100 text-red-700 rounded hover:bg-red-200 transition-colors"
+                >
+                  Bỏ chọn tất cả
+                </button>
               </div>
             </div>
-
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Chức năng
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Quyền
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {PERMISSION_MODULES.map((module) => (
-                    <React.Fragment key={module.id}>
-                      {/* Module Header */}
-                      <tr className="bg-gray-50">
-                        <td className="px-6 py-3">
-                          <div className="flex items-center gap-3">
-                            <input
-                              type="checkbox"
-                              checked={isModuleSelected(module.id)}
-                              ref={(el) => {
-                                if (el) {
-                                  el.indeterminate = isModulePartiallySelected(module.id);
-                                }
-                              }}
-                              onChange={(e) => handleSelectAllModule(module.id, e.target.checked)}
-                              className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                            />
-                            <span className="font-medium text-gray-900">{module.label}</span>
-                          </div>
-                        </td>
-                        <td className="px-6 py-3">
-                          <span className="text-sm text-gray-500">
-                            {module.permissions.length} quyền
-                          </span>
-                        </td>
-                      </tr>
-                      
-                      {/* Module Permissions */}
-                      {module.permissions.map((permission) => (
-                        <tr key={permission.id} className="hover:bg-gray-50">
-                          <td className="px-6 py-2 pl-12">
-                            <span className="text-sm text-gray-700">{permission.label}</span>
-                          </td>
-                          <td className="px-6 py-2">
-                            <input
-                              type="checkbox"
-                              checked={(permissions[selectedRole] || []).includes(permission.id)}
-                              onChange={(e) => handlePermissionChange(permission.id, e.target.checked)}
-                              className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                            />
-                          </td>
-                        </tr>
-                      ))}
-                    </React.Fragment>
+            
+            <div className="space-y-6">
+              {PERMISSION_MODULES.map((module) => (
+                <React.Fragment key={module.id}>
+                  {/* Module Header */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <input
+                        type="checkbox"
+                        checked={isModuleSelected(module.id)}
+                        ref={(el) => {
+                          if (el) {
+                            el.indeterminate = isModulePartiallySelected(module.id);
+                          }
+                        }}
+                        onChange={(e) => handleSelectAllModule(module.id, e.target.checked)}
+                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                      />
+                      <span className="font-medium text-gray-900">{module.label}</span>
+                    </div>
+                    <span className="text-gray-500">
+                      {module.permissions.length} quyền
+                    </span>
+                  </div>
+                  
+                  {/* Module Permissions */}
+                  {module.permissions.map((permission) => (
+                    <div key={permission.id} className="flex items-center justify-between">
+                      <span className="text-sm text-gray-700">{permission.label}</span>
+                      <input
+                        type="checkbox"
+                        checked={(permissions[selectedRole] || []).includes(permission.id)}
+                        onChange={(e) => handlePermissionChange(permission.id, e.target.checked)}
+                        className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                      />
+                    </div>
                   ))}
-                </tbody>
-              </table>
+                </React.Fragment>
+              ))}
             </div>
           </div>
         </div>
