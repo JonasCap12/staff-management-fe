@@ -70,15 +70,15 @@ const CompanyInfoForm = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
         <div>
           <h2 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
             <Building2 className="w-5 h-5 text-blue-600" />
             Thông tin công ty
           </h2>
-          <p className="text-sm text-gray-600 mt-1">
+          <p className="text-sm text-gray-600 mt-2">
             Cập nhật thông tin cơ bản của công ty
           </p>
         </div>
@@ -117,13 +117,13 @@ const CompanyInfoForm = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Logo Section */}
         <div className="lg:col-span-1">
-          <div className="bg-white p-6 rounded-lg border border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Logo công ty</h3>
+          <div className="bg-white p-8 rounded-lg border border-gray-200 shadow-sm">
+            <h3 className="text-lg font-medium text-gray-900 mb-6">Logo công ty</h3>
             
-            <div className="space-y-4">
+            <div className="space-y-6">
               {/* Logo Preview */}
               <div className="flex justify-center">
                 <div className="relative">
@@ -169,10 +169,10 @@ const CompanyInfoForm = () => {
 
         {/* Company Information Form */}
         <div className="lg:col-span-2">
-          <div className="bg-white p-6 rounded-lg border border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">Thông tin cơ bản</h3>
+          <div className="bg-white p-8 rounded-lg border border-gray-200 shadow-sm">
+            <h3 className="text-lg font-medium text-gray-900 mb-6">Thông tin cơ bản</h3>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Company Name */}
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
