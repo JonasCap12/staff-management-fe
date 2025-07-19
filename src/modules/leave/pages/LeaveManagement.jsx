@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../../auth/context/useAuth";
-import { Plus, Calendar, RefreshCw, Download } from "lucide-react";
+import { Plus, Calendar, Users, UserCheck, User } from "lucide-react";
 import LeaveForm from "../components/LeaveForm";
 import LeaveRequestList from "../components/LeaveRequestList";
 import { leaveTypes, commonReasons } from "../data/leaveConstants";
@@ -159,29 +159,49 @@ const LeaveManagement = () => {
           <nav className="-mb-px flex space-x-8">
             <button
               onClick={() => setActiveTab("my-requests")}
-              className={`py-2 px-1 border-b-2 font-medium text-sm ${
+              className={`py-2 px-4 border-b-2 font-semibold text-base flex items-center gap-2 transition-all duration-150 ${
                 activeTab === "my-requests"
-                  ? "border-blue-500 text-blue-600"
-                  : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                  ? "border-blue-500 text-blue-700 bg-blue-50 rounded-t-lg shadow"
+                  : "border-transparent text-gray-500 hover:text-blue-600 hover:border-blue-300"
               }`}
+              title={
+                hasPermission("*") || hasPermission("leave.admin")
+                  ? "Xem tất cả đơn nghỉ phép"
+                  : hasPermission("leave.approve")
+                  ? "Xem đơn của team bạn"
+                  : "Xem đơn nghỉ phép của bạn"
+              }
             >
-              {hasPermission("*") || hasPermission("leave.admin")
-                ? "Tất Cả Đơn"
-                : hasPermission("leave.approve")
-                ? "Đơn Team"
-                : "Đơn Của Tôi"}
+              {hasPermission("*") || hasPermission("leave.admin") ? (
+                <>
+                  <Users className="w-5 h-5 text-blue-500" />
+                  <span>Tất Cả Đơn</span>
+                </>
+              ) : hasPermission("leave.approve") ? (
+                <>
+                  <UserCheck className="w-5 h-5 text-green-500" />
+                  <span>Đơn Team</span>
+                </>
+              ) : (
+                <>
+                  <User className="w-5 h-5 text-indigo-500" />
+                  <span>Đơn Của Tôi</span>
+                </>
+              )}
             </button>
             {canApprove && (
               <button
                 onClick={() => setActiveTab("pending-approval")}
-                className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                className={`py-2 px-4 border-b-2 font-semibold text-base flex items-center gap-2 transition-all duration-150 ${
                   activeTab === "pending-approval"
-                    ? "border-blue-500 text-blue-600"
-                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+                    ? "border-blue-500 text-blue-700 bg-blue-50 rounded-t-lg shadow"
+                    : "border-transparent text-gray-500 hover:text-blue-600 hover:border-blue-300"
                 }`}
+                title="Các đơn chờ duyệt"
               >
-                Chờ Duyệt
-                <span className="ml-2 bg-red-100 text-red-600 py-1 px-2 rounded-full text-xs">
+                <Calendar className="w-5 h-5 text-orange-500" />
+                <span>Chờ Duyệt</span>
+                <span className="ml-2 bg-red-100 text-red-600 py-1 px-2 rounded-full text-xs font-bold">
                   {
                     getFilteredRequests().filter(
                       (req) => req.status === "pending"

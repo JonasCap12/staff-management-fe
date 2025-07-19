@@ -1,4 +1,5 @@
 import ExportButton from "../../../components/common/ExportButton";
+import customSelectStyle from "../../../components/common/CustomSelectStyle";
 
 const AttendanceFilters = ({
   selectedDate,
@@ -22,7 +23,8 @@ const AttendanceFilters = ({
           <select
             value={viewType}
             onChange={(e) => setViewType(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 min-w-[140px] transition"
+            style={customSelectStyle}
           >
             <option value="daily">Theo ngày</option>
             <option value="monthly">Theo tháng</option>
@@ -39,7 +41,7 @@ const AttendanceFilters = ({
               type="date"
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 min-w-[140px] transition"
             />
           </div>
         ) : (
@@ -51,7 +53,7 @@ const AttendanceFilters = ({
               type="month"
               value={selectedMonth}
               onChange={(e) => setSelectedMonth(e.target.value)}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 min-w-[140px] transition"
             />
           </div>
         )}
@@ -64,7 +66,8 @@ const AttendanceFilters = ({
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 min-w-[140px] transition"
+            style={customSelectStyle}
           >
             <option value="all">Tất cả</option>
             <option value="present">Có mặt</option>

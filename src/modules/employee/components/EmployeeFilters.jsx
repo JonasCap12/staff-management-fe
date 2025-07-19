@@ -1,5 +1,6 @@
-import FilterBar from '../../../components/common/FilterBar';
-import ExportButton from '../../../components/common/ExportButton';
+import FilterBar from "../../../components/common/FilterBar";
+import ExportButton from "../../../components/common/ExportButton";
+import customSelectStyle from "../../../components/common/CustomSelectStyle";
 
 export default function EmployeeFilters({
   searchTerm,
@@ -9,7 +10,7 @@ export default function EmployeeFilters({
   statusFilter,
   setStatusFilter,
   departments = [],
-  employees = []
+  employees = [],
 }) {
   const formatSalary = (salary) => {
     return (salary / 1000000).toFixed(1) + "M";
@@ -21,10 +22,10 @@ export default function EmployeeFilters({
     "Vị trí": emp.position,
     "Phòng ban": emp.department,
     "Trạng thái": emp.status === "active" ? "Hoạt động" : "Nghỉ phép",
-    "Lương": formatSalary(emp.salary),
+    Lương: formatSalary(emp.salary),
     "Đánh giá": emp.rating,
     "Ngày tham gia": emp.joinDate,
-    "Email": emp.email,
+    Email: emp.email,
     "Số điện thoại": emp.phone,
   }));
 
@@ -32,34 +33,36 @@ export default function EmployeeFilters({
     <FilterBar
       filters={[
         {
-          type: 'text',
-          key: 'search',
-          label: 'Tìm kiếm nhân viên...',
+          type: "text",
+          key: "search",
+          label: "Tìm kiếm nhân viên...",
           value: searchTerm,
           onChange: setSearchTerm,
         },
         {
-          type: 'select',
-          key: 'department',
-          label: 'Phòng ban',
+          type: "select",
+          key: "department",
+          label: "Phòng ban",
           value: departmentFilter,
           onChange: setDepartmentFilter,
           options: [
-            { value: '', label: 'Tất cả phòng ban' },
-            ...departments.map(dep => ({ value: dep, label: dep }))
+            { value: "", label: "Tất cả phòng ban" },
+            ...departments.map((dep) => ({ value: dep, label: dep })),
           ],
+          style: customSelectStyle,
         },
         {
-          type: 'select',
-          key: 'status',
-          label: 'Trạng thái',
+          type: "select",
+          key: "status",
+          label: "Trạng thái",
           value: statusFilter,
           onChange: setStatusFilter,
           options: [
-            { value: '', label: 'Tất cả trạng thái' },
-            { value: 'active', label: 'Hoạt động' },
-            { value: 'leave', label: 'Nghỉ phép' },
+            { value: "", label: "Tất cả trạng thái" },
+            { value: "active", label: "Hoạt động" },
+            { value: "leave", label: "Nghỉ phép" },
           ],
+          style: customSelectStyle,
         },
       ]}
       children={
@@ -72,20 +75,28 @@ export default function EmployeeFilters({
         </ExportButton>
       }
       activeFilters={[
-        searchTerm && { key: 'search', label: `Tìm kiếm: "${searchTerm}"` },
-        departmentFilter && { key: 'department', label: `Phòng ban: ${departmentFilter}` },
-        statusFilter && { key: 'status', label: `Trạng thái: ${statusFilter === 'active' ? 'Hoạt động' : 'Nghỉ phép'}` },
+        searchTerm && { key: "search", label: `Tìm kiếm: "${searchTerm}"` },
+        departmentFilter && {
+          key: "department",
+          label: `Phòng ban: ${departmentFilter}`,
+        },
+        statusFilter && {
+          key: "status",
+          label: `Trạng thái: ${
+            statusFilter === "active" ? "Hoạt động" : "Nghỉ phép"
+          }`,
+        },
       ].filter(Boolean)}
-      onRemoveFilter={key => {
-        if (key === 'search') setSearchTerm('');
-        if (key === 'department') setDepartmentFilter('');
-        if (key === 'status') setStatusFilter('');
+      onRemoveFilter={(key) => {
+        if (key === "search") setSearchTerm("");
+        if (key === "department") setDepartmentFilter("");
+        if (key === "status") setStatusFilter("");
       }}
       onResetFilters={() => {
-        setSearchTerm('');
-        setDepartmentFilter('');
-        setStatusFilter('');
+        setSearchTerm("");
+        setDepartmentFilter("");
+        setStatusFilter("");
       }}
     />
   );
-} 
+}
