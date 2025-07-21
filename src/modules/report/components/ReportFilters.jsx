@@ -1,50 +1,55 @@
-import React from 'react';
-import FilterBar from '../../../components/common/FilterBar';
-
-const ReportFilters = ({ 
-  selectedMonth, 
-  selectedDepartment, 
-  departments, 
-  months, 
-  onMonthChange, 
-  onDepartmentChange, 
-  onResetFilters, 
-  onExport, 
-  onRefresh, 
-  loading 
+import React from "react";
+import FilterBar from "../../../components/common/FilterBar";
+import customSelectStyle from "../../../components/common/CustomSelectStyle";
+const ReportFilters = ({
+  selectedMonth,
+  selectedDepartment,
+  departments,
+  months,
+  onMonthChange,
+  onDepartmentChange,
+  onResetFilters,
+  onExport,
+  onRefresh,
+  loading,
 }) => (
   <FilterBar
     filters={[
       {
-        type: 'select',
-        key: 'month',
-        label: 'Tháng',
+        type: "select",
+        key: "month",
+        label: "Tháng",
         value: selectedMonth,
         onChange: onMonthChange,
         options: [
-          { value: '', label: 'Chọn tháng' },
-          ...(months || []).map(m => ({ value: m, label: m }))
+          { value: "", label: "Chọn tháng" },
+          ...(months || []).map((m) => ({ value: m, label: m })),
         ],
+        style: customSelectStyle, // Apply custom styles to the select
       },
       {
-        type: 'select',
-        key: 'department',
-        label: 'Phòng ban',
+        type: "select",
+        key: "department",
+        label: "Phòng ban",
         value: selectedDepartment,
         onChange: onDepartmentChange,
         options: [
-          { value: '', label: 'Tất cả phòng ban' },
-          ...(departments || []).map(d => ({ value: d, label: d }))
+          { value: "", label: "Tất cả phòng ban" },
+          ...(departments || []).map((d) => ({ value: d, label: d })),
         ],
+        style: customSelectStyle, // Apply custom styles to the select
       },
     ]}
     activeFilters={[
-      selectedMonth && { key: 'month', label: `Tháng: ${selectedMonth}` },
-      selectedDepartment && { key: 'department', label: `Phòng ban: ${selectedDepartment}` },
+      selectedMonth && { key: "month", label: `Tháng: ${selectedMonth}` },
+      selectedDepartment && {
+        key: "department",
+        label: `Phòng ban: ${selectedDepartment}`,
+      },
     ].filter(Boolean)}
-    onRemoveFilter={key => {
-      if (key === 'month') onMonthChange('');
-      if (key === 'department') onDepartmentChange('');
+    onRemoveFilter={(key) => {
+      if (key === "month") onMonthChange("");
+      if (key === "department") onDepartmentChange("");
     }}
     onResetFilters={onResetFilters}
     children={
@@ -54,7 +59,7 @@ const ReportFilters = ({
           disabled={loading}
           className="px-3 py-2 text-sm text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors disabled:opacity-50"
         >
-          {loading ? 'Đang tải...' : 'Làm mới'}
+          {loading ? "Đang tải..." : "Làm mới"}
         </button>
         <button
           onClick={onExport}
@@ -67,4 +72,4 @@ const ReportFilters = ({
   />
 );
 
-export default ReportFilters; 
+export default ReportFilters;
