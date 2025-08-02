@@ -19,7 +19,7 @@ const InterviewList = ({
           key={interview.id}
           className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
         >
-          <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-6 text-white">
+          <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-6 text-white">
             <div className="flex justify-between items-start mb-3">
               <div>
                 <h3 className="text-xl font-bold">{interview.position}</h3>
