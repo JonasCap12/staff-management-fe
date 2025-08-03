@@ -19,7 +19,6 @@ const EmailSettingsForm = () => {
   const {
     formData,
     errors,
-    loading,
     saving,
     testing,
     hasChanges,
@@ -47,14 +46,7 @@ const EmailSettingsForm = () => {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        <span className="ml-3 text-gray-600">Đang tải cài đặt email...</span>
-      </div>
-    );
-  }
+
 
   return (
     <div className="space-y-8">

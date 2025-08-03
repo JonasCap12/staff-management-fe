@@ -167,50 +167,48 @@ export default function EmployeeManagement() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-      {/* Header - Tách riêng và sticky */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent flex items-center gap-2">
-                <Users className="w-8 h-8 text-blue-600" />
-                Quản lý Nhân viên
-              </h1>
-              <p className="text-gray-600 mt-1 text-sm md:text-base">
-                Theo dõi và quản lý thông tin nhân viên của bạn
-              </p>
+    <div className="space-y-6">
+      {/* Page Header */}
+      <div className="bg-white border-b border-gray-200 px-6 py-4">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent flex items-center gap-2">
+              <Users className="w-8 h-8 text-blue-600" />
+              Quản lý Nhân viên
+            </h1>
+            <p className="text-gray-600 mt-1 text-sm md:text-base">
+              Theo dõi và quản lý thông tin nhân viên của bạn
+            </p>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 text-sm text-gray-500">
+              <Calendar className="w-4 h-4" />
+              <span>Cập nhật: {new Date().toLocaleString("vi-VN")}</span>
             </div>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 text-sm text-gray-500">
-                <Calendar className="w-4 h-4" />
-                <span>Cập nhật: {new Date().toLocaleString("vi-VN")}</span>
-              </div>
-              <button
-                onClick={refreshData}
-                disabled={loading}
-                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors disabled:opacity-50"
-              >
-                <RefreshCw
-                  className={`w-4 h-4 ${loading ? "animate-spin" : ""}`}
-                />
-                Làm mới
-              </button>
+            <button
+              onClick={refreshData}
+              disabled={loading}
+              className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors disabled:opacity-50"
+            >
+              <RefreshCw
+                className={`w-4 h-4 ${loading ? "animate-spin" : ""}`}
+              />
+              Làm mới
+            </button>
 
-              <button
-                onClick={handleAdd}
-                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
-              >
-                <Plus className="w-4 h-4" />
-                Thêm nhân viên
-              </button>
-            </div>
+            <button
+              onClick={handleAdd}
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+            >
+              <Plus className="w-4 h-4" />
+              Thêm nhân viên
+            </button>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
+      <div className="px-6 space-y-6">
         {/* Employee Stats */}
         <EmployeeStats employees={employees} />
 

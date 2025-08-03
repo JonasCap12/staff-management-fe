@@ -1,75 +1,69 @@
-import FilterBar from "../../../components/common/FilterBar";
-import ExportButton from "../../../components/common/ExportButton";
-import { Download } from "lucide-react";
-import { calculateNetSalary } from "../../../utils/salaryCalc";
-import React from "react";
-import customSelectStyle from "../../../components/common/CustomSelectStyle";
+import FilterBar from '../../../components/common/FilterBar';
+import ExportButton from '../../../components/common/ExportButton';
+import { Download } from 'lucide-react';
+import { calculateNetSalary } from '../../../utils/salaryCalc';
+import React from 'react';
+
 export default function SalaryFilters({
-  searchTerm,
-  setSearchTerm,
-  selectedDepartment,
-  setSelectedDepartment,
-  selectedStatus,
-  setSelectedStatus,
-  selectedMonth,
-  setSelectedMonth,
+  searchTerm, setSearchTerm,
+  selectedDepartment, setSelectedDepartment,
+  selectedStatus, setSelectedStatus,
+  selectedMonth, setSelectedMonth,
   departments = [],
-  employees = [],
+  employees = []
 }) {
   const safeEmployees = Array.isArray(employees) ? employees : [];
   // Chuẩn hóa data xuất file excel đúng thứ tự cột
-  const exportData = safeEmployees.map((emp) => ({
-    "Nhân Viên": `${emp.name} (${emp.code})`,
-    "Lương Cơ Bản": emp.baseSalary,
-    "Phụ Cấp": Object.values(emp.allowances || {}).reduce((a, b) => a + b, 0),
-    "Khấu Trừ": Object.values(emp.deductions || {}).reduce((a, b) => a + b, 0),
-    "Lương Net": calculateNetSalary(emp)?.netSalary || 0,
-    "Trạng Thái": emp.status,
+  const exportData = safeEmployees.map(emp => ({
+    'Nhân Viên': `${emp.name} (${emp.code})`,
+    'Lương Cơ Bản': emp.baseSalary,
+    'Phụ Cấp': Object.values(emp.allowances || {}).reduce((a, b) => a + b, 0),
+    'Khấu Trừ': Object.values(emp.deductions || {}).reduce((a, b) => a + b, 0),
+    'Lương Net': calculateNetSalary(emp)?.netSalary || 0,
+    'Trạng Thái': emp.status
   }));
 
   return (
     <FilterBar
       filters={[
         {
-          type: "text",
-          key: "search",
-          label: "Tìm kiếm theo tên, mã NV...",
+          type: 'text',
+          key: 'search',
+          label: 'Tìm kiếm theo tên, mã NV...',
           value: searchTerm,
           onChange: setSearchTerm,
         },
         {
-          type: "select",
-          key: "department",
-          label: "Phòng ban",
+          type: 'select',
+          key: 'department',
+          label: 'Phòng ban',
           value: selectedDepartment,
           onChange: setSelectedDepartment,
           options: [
-            { value: "", label: "Tất cả phòng ban" },
-            ...departments.map((dep) => ({ value: dep, label: dep })),
+            { value: '', label: 'Tất cả phòng ban' },
+            ...departments.map(dep => ({ value: dep, label: dep }))
           ],
-          style: customSelectStyle,
         },
         {
-          type: "select",
-          key: "status",
-          label: "Trạng thái",
+          type: 'select',
+          key: 'status',
+          label: 'Trạng thái',
           value: selectedStatus,
           onChange: setSelectedStatus,
           options: [
-            { value: "", label: "Tất cả trạng thái" },
-            { value: "Đã thanh toán", label: "Đã thanh toán" },
-            { value: "Chưa thanh toán", label: "Chưa thanh toán" },
+            { value: '', label: 'Tất cả trạng thái' },
+            { value: 'Đã thanh toán', label: 'Đã thanh toán' },
+            { value: 'Chưa thanh toán', label: 'Chưa thanh toán' },
           ],
-          style: customSelectStyle, // Thêm style mũi tên
         },
         {
-          type: "custom",
-          key: "month",
+          type: 'custom',
+          key: 'month',
           render: () => (
             <input
               type="month"
               value={selectedMonth}
-              onChange={(e) => setSelectedMonth(e.target.value)}
+              onChange={e => setSelectedMonth(e.target.value)}
               className="border border-gray-200 px-4 py-3 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white min-w-[150px]"
             />
           ),
@@ -79,32 +73,26 @@ export default function SalaryFilters({
         <ExportButton
           icon={<Download className="w-4 h-4 mr-1" />}
           data={exportData}
-          fileName={`bang_luong_${selectedMonth || ""}.xlsx`}
+          fileName={`bang_luong_${selectedMonth || ''}.xlsx`}
         />
       }
       activeFilters={[
-        searchTerm && { key: "search", label: `Tìm kiếm: "${searchTerm}"` },
-        selectedDepartment && {
-          key: "department",
-          label: `Phòng ban: ${selectedDepartment}`,
-        },
-        selectedStatus && {
-          key: "status",
-          label: `Trạng thái: ${selectedStatus}`,
-        },
-        selectedMonth && { key: "month", label: `Tháng: ${selectedMonth}` },
+        searchTerm && { key: 'search', label: `Tìm kiếm: "${searchTerm}"` },
+        selectedDepartment && { key: 'department', label: `Phòng ban: ${selectedDepartment}` },
+        selectedStatus && { key: 'status', label: `Trạng thái: ${selectedStatus}` },
+        selectedMonth && { key: 'month', label: `Tháng: ${selectedMonth}` },
       ].filter(Boolean)}
-      onRemoveFilter={(key) => {
-        if (key === "search") setSearchTerm("");
-        if (key === "department") setSelectedDepartment("");
-        if (key === "status") setSelectedStatus("");
-        if (key === "month") setSelectedMonth("");
+      onRemoveFilter={key => {
+        if (key === 'search') setSearchTerm('');
+        if (key === 'department') setSelectedDepartment('');
+        if (key === 'status') setSelectedStatus('');
+        if (key === 'month') setSelectedMonth('');
       }}
       onResetFilters={() => {
-        setSearchTerm("");
-        setSelectedDepartment("");
-        setSelectedStatus("");
-        setSelectedMonth("");
+        setSearchTerm('');
+        setSelectedDepartment('');
+        setSelectedStatus('');
+        setSelectedMonth('');
       }}
     />
   );

@@ -4,16 +4,16 @@ import {
   BarChart3,
   Award,
   Target,
+  Search,
   Calendar,
   TrendingUp,
   Star,
+  Filter,
   RefreshCw,
+  Download,
 } from "lucide-react";
 import EmployeeTable from "../components/EmployeeTable";
 import EvaluationModal from "../components/EvaluationModal";
-import FilterBar from "../../../components/common/FilterBar";
-import ExportButton from "../../../components/common/ExportButton";
-import customSelectStyle from "../../../components/common/CustomSelectStyle";
 
 // ...existing code...
 const mockEmployees = [
@@ -168,8 +168,7 @@ const PerformanceEvaluationPage = ({
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [isEvaluationModalOpen, setIsEvaluationModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterDepartment, setFilterDepartment] = useState("");
-  const [filterRating, setFilterRating] = useState("");
+  const [filterDepartment, setFilterDepartment] = useState("all");
   const [loading, setLoading] = useState(false);
 
   const departments = [...new Set(employees.map((emp) => emp.department))];
@@ -179,16 +178,8 @@ const PerformanceEvaluationPage = ({
       employee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       employee.position.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesDepartment =
-      filterDepartment === "" || employee.department === filterDepartment;
-    const matchesRating =
-      filterRating === "" ||
-      (filterRating === "high" && employee.overallRating >= 4.5) ||
-      (filterRating === "medium" &&
-        employee.overallRating >= 3.5 &&
-        employee.overallRating < 4.5) ||
-      (filterRating === "low" && employee.overallRating < 3.5);
-
-    return matchesSearch && matchesDepartment && matchesRating;
+      filterDepartment === "all" || employee.department === filterDepartment;
+    return matchesSearch && matchesDepartment;
   });
 
   // Hàm làm mới dữ liệu
@@ -201,8 +192,7 @@ const PerformanceEvaluationPage = ({
       // Reset về dữ liệu gốc hoặc fetch từ API
       setEmployees(mockEmployees);
       setSearchTerm("");
-      setFilterDepartment("");
-      setFilterRating("");
+      setFilterDepartment("all");
 
       // Có thể thêm logic gọi API thực tế ở đây
       // const response = await fetch('/api/employees');
@@ -215,18 +205,54 @@ const PerformanceEvaluationPage = ({
     }
   };
 
-  // Chuẩn bị dữ liệu export
-  const exportData = employees.map((emp) => ({
-    "Tên nhân viên": emp.name,
-    "Chức vụ": emp.position,
-    "Phòng ban": emp.department,
-    "Điểm đánh giá": emp.overallRating,
-    "Công việc hoàn thành": emp.completedTasks,
-    "Công việc đang làm": emp.pendingTasks,
-    "Công việc quá hạn": emp.overdueTasks,
-    "Tỷ lệ chuyên cần (%)": emp.attendanceRate,
-    "Lần đánh giá cuối": emp.lastEvaluation,
-  }));
+  // Hàm xuất báo cáo Excel
+  const exportReportData = () => {
+    try {
+      // Tạo dữ liệu cho Excel
+      const excelData = employees.map((emp) => ({
+        "Tên nhân viên": emp.name,
+        "Chức vụ": emp.position,
+        "Phòng ban": emp.department,
+        "Điểm đánh giá": emp.overallRating,
+        "Công việc hoàn thành": emp.completedTasks,
+        "Công việc đang làm": emp.pendingTasks,
+        "Công việc quá hạn": emp.overdueTasks,
+        "Tỷ lệ chuyên cần (%)": emp.attendanceRate,
+        "Lần đánh giá cuối": emp.lastEvaluation,
+      }));
+
+      // Tạo CSV content
+      const headers = Object.keys(excelData[0]).join(",");
+      const csvContent = excelData
+        .map((row) =>
+          Object.values(row)
+            .map((value) => (typeof value === "string" ? `"${value}"` : value))
+            .join(",")
+        )
+        .join("\n");
+
+      const fullCsvContent = headers + "\n" + csvContent;
+
+      // Tạo và download file
+      const blob = new Blob(["\ufeff" + fullCsvContent], {
+        type: "text/csv;charset=utf-8;",
+      });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute(
+        "download",
+        `bao-cao-hieu-suat-${new Date().toISOString().split("T")[0]}.csv`
+      );
+      link.style.visibility = "hidden";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Error exporting data:", error);
+      alert("Có lỗi xảy ra khi xuất báo cáo!");
+    }
+  };
 
   const handleEvaluate = (employee) => {
     setSelectedEmployee(employee);
@@ -267,9 +293,9 @@ const PerformanceEvaluationPage = ({
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-6 py-4">
+      <div className="max-w-7xl mx-auto px-6 py-8">
+        {/* Header */}
+        <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>
               <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">
@@ -295,13 +321,16 @@ const PerformanceEvaluationPage = ({
                 />
                 Làm mới
               </button>
+              <button
+                onClick={exportReportData}
+                className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-green-600 bg-green-50 rounded-lg hover:bg-green-100 transition-colors"
+              >
+                <Download className="w-4 h-4" />
+                Xuất báo cáo
+              </button>
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <div className="bg-white/70 backdrop-blur-sm p-6 rounded-xl shadow-lg border border-white/20 hover:shadow-xl transition-all duration-300 hover:scale-105">
@@ -392,83 +421,36 @@ const PerformanceEvaluationPage = ({
         </div>
 
         {/* Filters */}
-        <div className="mb-8">
-          <FilterBar
-            filters={[
-              {
-                type: "text",
-                key: "search",
-                label: "Tìm kiếm theo tên hoặc chức vụ...",
-                value: searchTerm,
-                onChange: setSearchTerm,
-              },
-              {
-                type: "select",
-                key: "department",
-                label: "Phòng ban",
-                value: filterDepartment,
-                onChange: setFilterDepartment,
-                options: [
-                  { value: "", label: "Tất cả phòng ban" },
-                  ...departments.map((dept) => ({ value: dept, label: dept })),
-                ],
-                style: customSelectStyle,
-              },
-              {
-                type: "select",
-                key: "rating",
-                label: "Mức đánh giá",
-                value: filterRating,
-                onChange: setFilterRating,
-                options: [
-                  { value: "", label: "Tất cả mức đánh giá" },
-                  { value: "high", label: "Cao (≥ 4.5)" },
-                  { value: "medium", label: "Trung bình (3.5 - 4.5)" },
-                  { value: "low", label: "Thấp (< 3.5)" },
-                ],
-                style: customSelectStyle,
-              },
-            ]}
-            children={
-              <ExportButton
-                data={exportData}
-                fileName="bao_cao_hieu_suat.xlsx"
-                className="bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white px-6 py-3 rounded-xl flex items-center gap-2 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+        <div className="bg-white/70 backdrop-blur-sm p-6 rounded-xl shadow-lg border border-white/20 mb-8">
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex-1">
+              <div className="relative">
+                <Search className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Tìm kiếm nhân viên theo tên hoặc chức vụ..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-3 bg-white/50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent backdrop-blur-sm transition-all duration-200"
+                />
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <Filter className="w-5 h-5 text-gray-500" />
+              <select
+                value={filterDepartment}
+                onChange={(e) => setFilterDepartment(e.target.value)}
+                className="px-4 py-3 bg-white/50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent backdrop-blur-sm transition-all duration-200 min-w-[180px]"
               >
-                <span className="font-semibold">Xuất báo cáo</span>
-              </ExportButton>
-            }
-            activeFilters={[
-              searchTerm && {
-                key: "search",
-                label: `Tìm kiếm: "${searchTerm}"`,
-              },
-              filterDepartment && {
-                key: "department",
-                label: `Phòng ban: ${filterDepartment}`,
-              },
-              filterRating && {
-                key: "rating",
-                label: `Mức đánh giá: ${
-                  filterRating === "high"
-                    ? "Cao (≥ 4.5)"
-                    : filterRating === "medium"
-                    ? "Trung bình (3.5 - 4.5)"
-                    : "Thấp (< 3.5)"
-                }`,
-              },
-            ].filter(Boolean)}
-            onRemoveFilter={(key) => {
-              if (key === "search") setSearchTerm("");
-              if (key === "department") setFilterDepartment("");
-              if (key === "rating") setFilterRating("");
-            }}
-            onResetFilters={() => {
-              setSearchTerm("");
-              setFilterDepartment("");
-              setFilterRating("");
-            }}
-          />
+                <option value="all">Tất cả phòng ban</option>
+                {departments.map((dept) => (
+                  <option key={dept} value={dept}>
+                    {dept}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </div>
 
         {/* Employee Table */}

@@ -25,85 +25,79 @@ const AttendanceSystem = () => {
 
   const isAdminOrHR = user?.role === "admin" || user?.role === "hr";
 
-  const tabs = [
-    {
-      id: "checkin",
-      label: "Chấm công",
-      icon: Clock,
-    },
-    ...(isAdminOrHR
-      ? [
-          {
-            id: "manage",
-            label: "Quản lý",
-            icon: Users,
-          },
-          {
-            id: "qr-settings",
-            label: "Cài đặt QR",
-            icon: Settings,
-          },
-        ]
-      : []),
-  ];
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-3">
-                <Clock className="w-8 h-8 text-blue-600" />
-                <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">
-                  Hệ thống Chấm công
-                </h1>
-              </div>
-              <p className="text-gray-600 mt-1 text-sm md:text-base">
-                Quản lý thời gian làm việc hiệu quả
-              </p>
+    <div className="space-y-6">
+      {/* Page Header */}
+      <div className="bg-white border-b border-gray-200 px-6 py-4">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <div className="flex items-center gap-3">
+              <Clock className="w-8 h-8 text-blue-600" />
+              <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">
+                Hệ thống Chấm công
+              </h1>
             </div>
-          </div>
-
-          {/* Tab Navigation - Updated to match DocumentManager style */}
-          <div className="mt-6">
-            <nav className="flex flex-wrap gap-2">
-              {tabs.map((tab) => {
-                const Icon = tab.icon;
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium transition-all duration-200 border ${
-                      activeTab === tab.id
-                        ? "bg-blue-600 text-white border-blue-600 shadow-md"
-                        : "bg-white text-gray-700 border-gray-200 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
-                    }`}
-                  >
-                    <Icon className="w-4 h-4" />
-                    <span className="text-sm font-medium">{tab.label}</span>
-                  </button>
-                );
-              })}
-            </nav>
+            <p className="text-gray-600 mt-1 text-sm md:text-base">
+              Quản lý thời gian làm việc hiệu quả
+            </p>
           </div>
         </div>
       </div>
 
       {/* Nội dung chính */}
-      <div className="p-6">
-        <div className="max-w-7xl mx-auto">
-          {/* Nội dung tab */}
-          {activeTab === "checkin" && <CheckInTab qrCode={qrCode} />}
-          {activeTab === "manage" && isAdminOrHR && <ManageTab />}
-          {activeTab === "qr-settings" && isAdminOrHR && (
-            <QRSettingsTab
-              qrCode={qrCode}
-              generateNewQRCode={generateNewQRCode}
-            />
-          )}
+      <div className="px-6 space-y-6">
+        {/* Tabs */}
+        <div className="mb-8">
+          <div className="flex space-x-1 bg-gray-100 p-1 rounded-xl w-fit">
+            <button
+              onClick={() => setActiveTab("checkin")}
+              className={`px-6 py-3 rounded-lg font-medium transition-all ${
+                activeTab === "checkin"
+                  ? "bg-white text-blue-600 shadow-md"
+                  : "text-gray-600 hover:text-gray-800"
+              }`}
+            >
+              <Clock className="inline h-4 w-4 mr-2" />
+              Chấm công
+            </button>
+            {isAdminOrHR && (
+              <>
+                <button
+                  onClick={() => setActiveTab("manage")}
+                  className={`px-6 py-3 rounded-lg font-medium transition-all ${
+                    activeTab === "manage"
+                      ? "bg-white text-blue-600 shadow-md"
+                      : "text-gray-600 hover:text-gray-800"
+                  }`}
+                >
+                  <Users className="inline h-4 w-4 mr-2" />
+                  Quản lý
+                </button>
+                <button
+                  onClick={() => setActiveTab("qr-settings")}
+                  className={`px-6 py-3 rounded-lg font-medium transition-all ${
+                    activeTab === "qr-settings"
+                      ? "bg-white text-blue-600 shadow-md"
+                      : "text-gray-600 hover:text-gray-800"
+                  }`}
+                >
+                  <Settings className="inline h-4 w-4 mr-2" />
+                  Cài đặt QR
+                </button>
+              </>
+            )}
+          </div>
         </div>
+
+        {/* Nội dung tab */}
+        {activeTab === "checkin" && <CheckInTab qrCode={qrCode} />}
+        {activeTab === "manage" && isAdminOrHR && <ManageTab />}
+        {activeTab === "qr-settings" && isAdminOrHR && (
+          <QRSettingsTab
+            qrCode={qrCode}
+            generateNewQRCode={generateNewQRCode}
+          />
+        )}
       </div>
     </div>
   );

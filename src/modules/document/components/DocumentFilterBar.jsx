@@ -1,13 +1,6 @@
 import React, { useState } from "react";
-import FilterBar from "../../../components/common/FilterBar";
-import {
-  Search,
-  ChevronDown,
-  Building2,
-  FileText,
-  X,
-  Filter,
-} from "lucide-react";
+import FilterBar from '../../../components/common/FilterBar';
+import { Search, ChevronDown, Building2, FileText, X, Filter } from "lucide-react";
 
 /**
  * @param {Object} props
@@ -55,68 +48,66 @@ const DocumentFilterBar = ({
 
   const filters = [
     {
-      type: "text",
-      key: "search",
-      label: "Tìm kiếm tài liệu...",
+      type: 'text',
+      key: 'search',
+      label: 'Tìm kiếm tài liệu...',
       value: search,
       onChange: onSearchChange,
     },
     {
-      type: "select",
-      key: "type",
-      label: "Loại",
+      type: 'select',
+      key: 'type',
+      label: 'Loại',
       value: type,
       onChange: onTypeChange,
-      options: [{ value: "", label: "Tất cả loại" }, ...typeOptions],
+      options: [
+        { value: '', label: 'Tất cả loại' },
+        ...typeOptions
+      ],
     },
     {
-      type: "custom",
-      key: "dateFrom",
+      type: 'custom',
+      key: 'dateFrom',
       render: () => (
         <input
           type="date"
           value={dateFrom}
-          onChange={(e) => onDateFromChange && onDateFromChange(e.target.value)}
+          onChange={e => onDateFromChange && onDateFromChange(e.target.value)}
           className="px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 shadow-sm hover:shadow-md text-base min-w-[120px]"
         />
       ),
     },
     {
-      type: "custom",
-      key: "dateTo",
+      type: 'custom',
+      key: 'dateTo',
       render: () => (
         <input
           type="date"
           value={dateTo}
-          onChange={(e) => onDateToChange && onDateToChange(e.target.value)}
+          onChange={e => onDateToChange && onDateToChange(e.target.value)}
           className="px-4 py-3 bg-white border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-200 shadow-sm hover:shadow-md text-base min-w-[120px]"
         />
       ),
     },
     {
-      type: "select",
-      key: "department",
-      label: "Phòng ban",
+      type: 'select',
+      key: 'department',
+      label: 'Phòng ban',
       value: department,
       onChange: onDepartmentChange,
-      options: [{ value: "", label: "Tất cả phòng ban" }, ...departmentOptions],
+      options: [
+        { value: '', label: 'Tất cả phòng ban' },
+        ...departmentOptions
+      ],
     },
   ];
 
   const activeFilters = [
-    search && { key: "search", label: `Tìm: "${search}"` },
-    type && {
-      key: "type",
-      label: typeOptions.find((t) => t.value === type)?.label || type,
-    },
-    department && {
-      key: "department",
-      label:
-        departmentOptions.find((d) => d.value === department)?.label ||
-        department,
-    },
-    dateFrom && { key: "dateFrom", label: `Từ: ${dateFrom}` },
-    dateTo && { key: "dateTo", label: `Đến: ${dateTo}` },
+    search && { key: 'search', label: `Tìm: "${search}"` },
+    type && { key: 'type', label: typeOptions.find(t => t.value === type)?.label || type },
+    department && { key: 'department', label: departmentOptions.find(d => d.value === department)?.label || department },
+    dateFrom && { key: 'dateFrom', label: `Từ: ${dateFrom}` },
+    dateTo && { key: 'dateTo', label: `Đến: ${dateTo}` },
   ].filter(Boolean);
 
   return (
@@ -136,9 +127,7 @@ const DocumentFilterBar = ({
             Lọc
           </button>
           <button
-            className={`flex items-center gap-2 px-6 py-3 text-gray-600 hover:text-gray-800 hover:bg-gray-50 rounded-xl transition-all duration-200 font-medium border border-gray-200 bg-white text-base ${
-              resetAnim ? "ring-2 ring-indigo-200" : ""
-            }`}
+            className={`flex items-center gap-2 px-6 py-3 text-gray-600 hover:text-gray-800 hover:bg-gray-50 rounded-xl transition-all duration-200 font-medium border border-gray-200 bg-white text-base ${resetAnim ? 'ring-2 ring-indigo-200' : ''}`}
             onClick={handleReset}
             type="button"
           >
@@ -151,4 +140,4 @@ const DocumentFilterBar = ({
   );
 };
 
-export default DocumentFilterBar;
+export default DocumentFilterBar; 

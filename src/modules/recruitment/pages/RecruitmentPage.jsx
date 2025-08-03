@@ -152,7 +152,6 @@ const RecruitmentPage = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [activeTab, setActiveTab] = useState("interviews");
-
   const [newInterview, setNewInterview] = useState({
     date: "",
     time: "",
@@ -178,20 +177,6 @@ const RecruitmentPage = () => {
     "Lê Văn C",
     "Phạm Thị D",
     "Hoàng Văn E",
-  ];
-
-  // Cấu hình tabs
-  const tabs = [
-    {
-      id: "interviews",
-      label: "Lịch Phỏng Vấn",
-      icon: Calendar,
-    },
-    {
-      id: "candidates",
-      label: "Ứng Viên",
-      icon: Users,
-    },
   ];
 
   // Các hàm xử lý (giữ nguyên như file gốc)
@@ -309,63 +294,63 @@ const RecruitmentPage = () => {
 
   // Render
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">
-                <Users className="w-6 h-6 md:w-8 md:h-8 inline-block mr-2 text-blue-600" />
-                Hệ Thống Quản Lý Tuyển Dụng
-              </h1>
-              <p className="text-gray-600 mt-1 text-sm md:text-base">
-                Quản lý hiệu quả lịch phỏng vấn và ứng viên
-              </p>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 text-sm text-gray-500">
-                <Calendar className="w-4 h-4" />
-                <span>Cập nhật: {new Date().toLocaleString("vi-VN")}</span>
-              </div>
-              <button
-                onClick={() => setShowCreateModal(true)}
-                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
-              >
-                <Plus className="w-4 h-4 md:w-5 md:h-5 mr-2" />
-                <span className="hidden md:inline">Tạo buổi phỏng vấn </span>
-                <span className="md:hidden">Tạo PV</span>
-              </button>
-            </div>
+    <div className="space-y-6">
+      {/* Page Header */}
+      <div className="bg-white border-b border-gray-200 px-6 py-4">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">
+              <Users className="w-6 h-6 md:w-8 md:h-8 inline-block mr-2 text-blue-600" />
+              Hệ Thống Quản Lý Tuyển Dụng
+            </h1>
+            <p className="text-gray-600 mt-1 text-sm md:text-base">
+              Quản lý hiệu quả lịch phỏng vấn và ứng viên
+            </p>
           </div>
-
-          {/* Tab Navigation - Cải thiện theo style DocumentManagerContent */}
-          <div className="mt-6">
-            <nav className="flex flex-wrap gap-2">
-              {tabs.map((tab) => {
-                const Icon = tab.icon;
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium transition-all duration-200 border ${
-                      activeTab === tab.id
-                        ? "bg-blue-600 text-white border-blue-600 shadow-md"
-                        : "bg-white text-gray-700 border-gray-200 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
-                    }`}
-                  >
-                    <Icon className="w-4 h-4" />
-                    <span className="text-sm font-medium">{tab.label}</span>
-                  </button>
-                );
-              })}
-            </nav>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 text-sm text-gray-500">
+              <Calendar className="w-4 h-4" />
+              <span>Cập nhật: {new Date().toLocaleString("vi-VN")}</span>
+            </div>
+            <button
+              onClick={() => setShowCreateModal(true)}
+              className="flex items-center px-4 py-2 md:px-6 md:py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            >
+              <Plus className="w-4 h-4 md:w-5 md:h-5 mr-2" />
+              <span className="hidden md:inline">Tạo Buổi PV Mới</span>
+              <span className="md:hidden">Tạo PV</span>
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Nội dung chính */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      {/* Main Content */}
+      <div className="px-6 space-y-8">
+        {/* Tab Navigation */}
+        <div className="flex space-x-1 bg-gray-100 p-1 rounded-xl mb-8 w-fit">
+          <button
+            onClick={() => setActiveTab("interviews")}
+            className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
+              activeTab === "interviews"
+                ? "bg-white text-blue-600 shadow-md"
+                : "text-gray-600 hover:text-gray-900"
+            }`}
+          >
+            <Calendar className="w-5 h-5 inline mr-2" />
+            Lịch Phỏng Vấn
+          </button>
+          <button
+            onClick={() => setActiveTab("candidates")}
+            className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
+              activeTab === "candidates"
+                ? "bg-white text-blue-600 shadow-md"
+                : "text-gray-600 hover:text-gray-900"
+            }`}
+          >
+            <Users className="w-5 h-5 inline mr-2" />
+            Ứng Viên
+          </button>
+        </div>
         {/* Danh sách phỏng vấn */}
         {activeTab === "interviews" && (
           <InterviewList

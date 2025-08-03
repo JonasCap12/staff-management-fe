@@ -37,7 +37,7 @@ export default function FilterBar({
               <div className="relative flex-1" key={filter.key}>
                 {/* Thêm icon tìm kiếm */}
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Search className="w-4 h-4  text-gray-500" />
+                  <Search className="w-4 h-4 text-gray-400" />
                 </div>
                 <input
                   type="text"
@@ -56,7 +56,6 @@ export default function FilterBar({
                 value={filter.value}
                 onChange={(e) => filter.onChange(e.target.value)}
                 className="border border-gray-200 px-4 py-3 rounded-xl text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white min-w-[150px]"
-                style={filter.style} // Thêm dòng này để nhận style custom từ filter
               >
                 {filter.options.map((opt) => (
                   <option key={opt.value} value={opt.value}>

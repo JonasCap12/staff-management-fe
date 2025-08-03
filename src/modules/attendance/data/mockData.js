@@ -1,11 +1,10 @@
-// data/mockData.js - Enhanced with more test data
+// data/mockData.js
 export const mockAttendanceData = [
-  // Today's data
   {
     id: 1,
     employeeId: "EMP001",
     employeeName: "Nguyễn Văn A",
-    date: new Date().toISOString().split("T")[0],
+    date: new Date().toISOString().split("T")[0], // Sử dụng ngày hiện tại
     checkIn: "08:30",
     checkOut: "17:45",
     status: "present",
@@ -15,7 +14,7 @@ export const mockAttendanceData = [
     id: 2,
     employeeId: "EMP002",
     employeeName: "Trần Thị B",
-    date: new Date().toISOString().split("T")[0],
+    date: new Date().toISOString().split("T")[0], // Sử dụng ngày hiện tại
     checkIn: "08:15",
     checkOut: "17:30",
     status: "present",
@@ -25,19 +24,18 @@ export const mockAttendanceData = [
     id: 3,
     employeeId: "EMP003",
     employeeName: "Lê Văn C",
-    date: new Date().toISOString().split("T")[0],
+    date: new Date().toISOString().split("T")[0], // Sử dụng ngày hiện tại
     checkIn: "09:15",
     checkOut: "",
     status: "late",
     workHours: 0,
   },
-
-  // Previous days in current month
+  // Thêm một số dữ liệu cho các ngày khác để test
   {
     id: 4,
-    employeeId: "EMP001",
-    employeeName: "Nguyễn Văn A",
-    date: "2025-07-05",
+    employeeId: "EMP004",
+    employeeName: "Phạm Thị D",
+    date: "2024-12-05",
     checkIn: "08:45",
     checkOut: "17:30",
     status: "present",
@@ -45,86 +43,12 @@ export const mockAttendanceData = [
   },
   {
     id: 5,
-    employeeId: "EMP002",
-    employeeName: "Trần Thị B",
-    date: "2025-07-05",
-    checkIn: "",
-    checkOut: "",
-    status: "absent",
-    workHours: 0,
-  },
-  {
-    id: 6,
-    employeeId: "EMP003",
-    employeeName: "Lê Văn C",
-    date: "2025-07-05",
-    checkIn: "08:30",
-    checkOut: "17:45",
-    status: "present",
-    workHours: 8.25,
-  },
-
-  // More days for testing
-  {
-    id: 7,
-    employeeId: "EMP001",
-    employeeName: "Nguyễn Văn A",
-    date: "2025-07-04",
-    checkIn: "08:30",
-    checkOut: "17:30",
-    status: "present",
-    workHours: 8.0,
-  },
-  {
-    id: 8,
-    employeeId: "EMP002",
-    employeeName: "Trần Thị B",
-    date: "2025-07-04",
-    checkIn: "09:00",
-    checkOut: "17:45",
-    status: "late",
-    workHours: 7.75,
-  },
-  {
-    id: 9,
-    employeeId: "EMP004",
-    employeeName: "Phạm Thị D",
-    date: "2025-07-03",
-    checkIn: "08:45",
-    checkOut: "17:30",
-    status: "present",
-    workHours: 7.75,
-  },
-  {
-    id: 10,
     employeeId: "EMP005",
     employeeName: "Hoàng Văn E",
-    date: "2025-07-03",
+    date: "2024-12-04",
     checkIn: "",
     checkOut: "",
     status: "absent",
     workHours: 0,
-  },
-
-  // Previous month data for testing
-  {
-    id: 11,
-    employeeId: "EMP001",
-    employeeName: "Nguyễn Văn A",
-    date: "2025-06-30",
-    checkIn: "08:30",
-    checkOut: "17:30",
-    status: "present",
-    workHours: 8.0,
-  },
-  {
-    id: 12,
-    employeeId: "EMP002",
-    employeeName: "Trần Thị B",
-    date: "2025-06-30",
-    checkIn: "08:15",
-    checkOut: "17:45",
-    status: "present",
-    workHours: 8.5,
   },
 ];
