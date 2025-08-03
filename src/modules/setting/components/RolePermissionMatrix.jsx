@@ -25,7 +25,6 @@ const RolePermissionMatrix = () => {
   const [roles, setRoles] = useState(ROLE_OPTIONS);
   const [selectedRole, setSelectedRole] = useState('admin');
   const [permissions, setPermissions] = useState(DEFAULT_ROLE_PERMISSIONS);
-  const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [editingRole, setEditingRole] = useState(null);
   const [newRole, setNewRole] = useState({ name: '', label: '', color: 'gray' });
@@ -35,7 +34,6 @@ const RolePermissionMatrix = () => {
   // Load roles and permissions
   useEffect(() => {
     const loadRolesAndPermissions = async () => {
-      setLoading(true);
       try {
         // In a real app, you would load from API
         // const rolesData = await rolePermissionApi.getRoles();
@@ -46,8 +44,6 @@ const RolePermissionMatrix = () => {
         setPermissions(DEFAULT_ROLE_PERMISSIONS);
       } catch (error) {
         console.error('Failed to load roles and permissions:', error);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -197,14 +193,7 @@ const RolePermissionMatrix = () => {
     return selectedCount > 0 && selectedCount < modulePermissions.length;
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        <span className="ml-3 text-gray-600">Đang tải phân quyền...</span>
-      </div>
-    );
-  }
+
 
   return (
     <div className="space-y-8">

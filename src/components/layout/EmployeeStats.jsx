@@ -40,18 +40,18 @@ const EmployeeStats = ({ employees }) => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
       {stats.map((stat, index) => (
         <div
           key={index}
-          className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-200"
+          className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all duration-200"
         >
           <div className="flex items-center justify-between">
-            <div>
-              <p className="text-gray-600 text-sm font-medium">{stat.label}</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">{stat.value}</p>
+            <div className="flex-1 min-w-0">
+              <p className="text-gray-600 text-xs sm:text-sm font-medium truncate">{stat.label}</p>
+              <p className="text-xl sm:text-2xl font-bold text-gray-900 mt-1">{stat.value}</p>
               <p
-                className={`text-sm mt-2 ${
+                className={`text-xs sm:text-sm mt-1 sm:mt-2 ${
                   stat.change.startsWith("+")
                     ? "text-green-600"
                     : "text-red-500"
@@ -60,8 +60,8 @@ const EmployeeStats = ({ employees }) => {
                 {stat.change} từ tháng trước
               </p>
             </div>
-            <div className={`p-3 rounded-xl bg-${stat.color}-100`}>
-              <stat.icon className={`h-6 w-6 text-${stat.color}-600`} />
+            <div className={`p-2 sm:p-3 rounded-lg sm:rounded-xl bg-${stat.color}-100 ml-3 flex-shrink-0`}>
+              <stat.icon className={`h-5 w-5 sm:h-6 sm:w-6 text-${stat.color}-600`} />
             </div>
           </div>
         </div>

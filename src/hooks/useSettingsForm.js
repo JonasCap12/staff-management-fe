@@ -96,14 +96,12 @@ const validateSystemConfig = (data) => {
 export const useCompanyInfoForm = () => {
   const [formData, setFormData] = useState(mockSettingsData.companyInfo);
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
 
   // Load initial data
   useEffect(() => {
     const loadCompanyInfo = async () => {
-      setLoading(true);
       try {
         const data = await companyInfoApi.getCompanyInfo();
         setFormData(data);
@@ -111,8 +109,6 @@ export const useCompanyInfoForm = () => {
         console.error('Failed to load company info:', error);
         // Use mock data as fallback
         setFormData(mockSettingsData.companyInfo);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -179,7 +175,6 @@ export const useCompanyInfoForm = () => {
   return {
     formData,
     errors,
-    loading,
     saving,
     hasChanges,
     handleInputChange,
@@ -192,22 +187,18 @@ export const useCompanyInfoForm = () => {
 export const useSystemConfigForm = () => {
   const [formData, setFormData] = useState(mockSettingsData.systemConfig);
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
 
   // Load initial data
   useEffect(() => {
     const loadSystemConfig = async () => {
-      setLoading(true);
       try {
         const data = await systemConfigApi.getSystemConfig();
         setFormData(data);
       } catch (error) {
         console.error('Failed to load system config:', error);
         setFormData(mockSettingsData.systemConfig);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -258,7 +249,6 @@ export const useSystemConfigForm = () => {
   return {
     formData,
     errors,
-    loading,
     saving,
     hasChanges,
     handleInputChange,
@@ -270,7 +260,6 @@ export const useSystemConfigForm = () => {
 export const useEmailSettingsForm = () => {
   const [formData, setFormData] = useState(mockSettingsData.emailSettings);
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [testing, setTesting] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
@@ -278,15 +267,12 @@ export const useEmailSettingsForm = () => {
   // Load initial data
   useEffect(() => {
     const loadEmailSettings = async () => {
-      setLoading(true);
       try {
         const data = await emailSettingsApi.getEmailSettings();
         setFormData(data);
       } catch (error) {
         console.error('Failed to load email settings:', error);
         setFormData(mockSettingsData.emailSettings);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -367,7 +353,6 @@ export const useEmailSettingsForm = () => {
   return {
     formData,
     errors,
-    loading,
     saving,
     testing,
     hasChanges,
@@ -380,7 +365,6 @@ export const useEmailSettingsForm = () => {
 
 // Custom hook for data management
 export const useDataManagement = () => {
-  const [loading, setLoading] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [resetting, setResetting] = useState(false);
   const [dataStats, setDataStats] = useState(mockSettingsData.dataStats);
@@ -388,15 +372,12 @@ export const useDataManagement = () => {
   // Load data statistics
   useEffect(() => {
     const loadDataStats = async () => {
-      setLoading(true);
       try {
         const stats = await dataManagementApi.getDataStats();
         setDataStats(stats);
       } catch (error) {
         console.error('Failed to load data stats:', error);
         setDataStats(mockSettingsData.dataStats);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -446,7 +427,6 @@ export const useDataManagement = () => {
 
   return {
     dataStats,
-    loading,
     exporting,
     resetting,
     handleExportData,

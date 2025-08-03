@@ -46,32 +46,30 @@ export default function SalaryManagement() {
     setShowModal(false);
   };
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">
-                <DollarSign className="w-6 h-6 md:w-8 md:h-8 inline-block mr-2 text-blue-600" />
-                Quản lý Lương nhân viên
-              </h1>
-              <p className="text-gray-600 mt-1 text-sm md:text-base">
-                Theo dõi, thống kê và quản lý bảng lương nhân viên
-              </p>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 text-sm text-gray-500">
-                <Calendar className="w-4 h-4" />
-                <span>Cập nhật: {new Date().toLocaleString("vi-VN")}</span>
-              </div>
+    <div className="space-y-6">
+      {/* Page Header */}
+      <div className="bg-white border-b border-gray-200 px-6 py-4">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">
+              <DollarSign className="w-6 h-6 md:w-8 md:h-8 inline-block mr-2 text-blue-600" />
+              Quản lý Lương nhân viên
+            </h1>
+            <p className="text-gray-600 mt-1 text-sm md:text-base">
+              Theo dõi, thống kê và quản lý bảng lương nhân viên
+            </p>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 text-sm text-gray-500">
+              <Calendar className="w-4 h-4" />
+              <span>Cập nhật: {new Date().toLocaleString("vi-VN")}</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
+      <div className="px-6 space-y-8">
         {/* Employee Stats */}
         <EmployeeStats employees={employees} />
         {/* Bộ lọc lương */}
